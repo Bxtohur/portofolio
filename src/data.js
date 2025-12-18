@@ -79,8 +79,8 @@ export const certifications = [
     category: "Certification",
     description: "Comprehensive engineering certification covering sensor integration, microcontroller programming, and network protocols. Achieved a high proficiency Band Score of 88.75.",
     tech: ["Indobot Academy", "Jun 2024"],
-    image: "./images/cert-iot.png",      // Perbaikan: gunakan 'image' & hapus titik
-    pdf: "./certificates/cert-iot.pdf", // Perbaikan: hapus titik
+    image: "./images/cert-iot.png",
+    pdf: "./certificates/cert-iot.pdf",
     link: "#",
   },
   {

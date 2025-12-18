@@ -16,7 +16,6 @@ function App() {
     document.body.style.overflow = "auto";
   };
 
-  // Logic untuk Next/Prev Image (Hanya aktif jika item adalah Project/Gambar, bukan PDF)
   const nextImage = (e) => {
     e.stopPropagation();
     if (selectedItem && selectedItem.images) {
@@ -38,7 +37,6 @@ function App() {
   return (
     <div className="min-h-screen max-w-[1440px] mx-auto bg-[#fdfdfd] text-black font-sans selection:bg-black selection:text-white border-x border-black/10 relative">
       
-      {/* HEADER */}
       <header className="fixed top-0 left-0 w-full px-6 py-5 flex justify-between items-center z-40 bg-[#fdfdfd]/80 backdrop-blur-md border-b border-black/5">
         <div className="text-xl font-bold tracking-tighter uppercase border border-black px-3 py-1 hover:bg-black hover:text-white transition-colors cursor-default">
           {personalData.name}
@@ -52,7 +50,6 @@ function App() {
         </nav>
       </header>
 
-      {/* HERO SECTION */}
       <section className="pt-32 pb-20 px-6 border-b border-black">
         <div className="flex flex-col md:flex-row gap-12 items-end">
           <div className="flex-1 animate-reveal">
@@ -67,7 +64,6 @@ function App() {
               <a href="#contact" className="bg-black text-white px-8 py-4 font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors border border-black">
                 Available for hire
               </a>
-              {/* TOMBOL DOWNLOAD CV */}
               <a href={personalData.cvFile} download className="bg-white text-black px-8 py-4 font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors border border-black flex items-center gap-2">
                 Download CV <span className="text-xl">↓</span>
               </a>
@@ -80,7 +76,6 @@ function App() {
         </div>
       </section>
 
-      {/* SKILLS RUNNING TEXT */}
       <div className="border-b border-black bg-black text-white overflow-hidden py-5 md:py-7 relative z-10">
         <div className="flex w-full">
           <div className="flex animate-marquee min-w-full shrink-0 items-center justify-around">
@@ -96,7 +91,6 @@ function App() {
         </div>
       </div>
 
-      {/* PROJECTS SECTION */}
       <section id="work" className="bg-white">
         <div className="px-6 py-12 border-b border-black flex justify-between items-end">
           <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-400">Selected Works</h2>
@@ -120,13 +114,11 @@ function App() {
         </div>
       </section>
 
-      {/* CERTIFICATIONS SECTION */}
       <section id="certifications" className="bg-gray-50">
         <div className="px-4 md:px-8 py-8 border-b-2 border-black bg-white">
           <h2 className="text-xl font-black uppercase tracking-tighter">Licenses & Certifications</h2>
         </div>
         
-        {/* Grid Layout diperbaiki untuk Landscape Certificate */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-b-2 border-black">
           {certifications.map((cert) => (
             <div 
@@ -134,15 +126,12 @@ function App() {
               onClick={() => openModal(cert)}
               className="group relative cursor-pointer border-b-2 border-r-2 border-black bg-white hover:bg-gray-100 transition-colors"
             >
-              {/* Aspect Ratio 4/3 lebih cocok untuk sertifikat daripada h-96 */}
               <div className="aspect-[4/3] w-full p-8 border-b-2 border-black bg-gray-100 flex items-center justify-center overflow-hidden relative">
-                 {/* Gambar pakai OBJECT-CONTAIN agar tidak terpotong */}
                  <img 
                     src={cert.image} 
                     alt={cert.title} 
                     className="w-full h-full object-contain shadow-lg transform grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
                   />
-                  {/* Badge PDF */}
                   {cert.pdf && (
                     <div className="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded z-10">
                       PDF
@@ -150,7 +139,6 @@ function App() {
                   )}
               </div>
 
-              {/* Info Area - Static di bawah */}
               <div className="p-6">
                 <h4 className="font-black uppercase text-xl leading-tight mb-2 group-hover:underline decoration-2 underline-offset-4">
                   {cert.title}
@@ -165,7 +153,6 @@ function App() {
         </div>
       </section>
 
-      {/* CONTACT SECTION */}
       <section id="contact" className="grid grid-cols-1 md:grid-cols-2 border-b border-black bg-gray-50">
         <div className="p-12 md:p-24 border-b md:border-b-0 md:border-r border-black flex flex-col justify-between">
           <div><h2 className="text-5xl font-black uppercase tracking-tighter mb-8 leading-none">Let's build <br/>something <br/>solid.</h2></div>
@@ -190,15 +177,12 @@ function App() {
         © {new Date().getFullYear()} Rizal M. Nur — Engineered with Precision.
       </footer>
 
-      {/* MODAL UNIVERSAL (Bisa Gambar Project / PDF Sertifikat) */}
       {selectedItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" onClick={closeModal}>
           <div className="w-full max-w-6xl bg-white border border-gray-200 shadow-2xl flex flex-col max-h-[95vh] overflow-hidden animate-reveal" onClick={(e) => e.stopPropagation()}>
             
-            {/* AREA VISUAL (GAMBAR / PDF) */}
             <div className="relative h-[50vh] md:h-[65vh] bg-gray-100 group select-none">
               
-              {/* Logika: Jika ada PDF, tampilkan iframe PDF. Jika tidak, tampilkan Carousel Gambar */}
               {selectedItem.pdf ? (
                 <iframe 
                   src={`${selectedItem.pdf}#toolbar=0`} 
@@ -207,12 +191,11 @@ function App() {
                 ></iframe>
               ) : (
                 <>
-                  {/* Logic Project (Gambar) */}
                   <img 
-                    src={selectedItem.images ? selectedItem.images[currentImageIndex] : selectedItem.image} 
-                    alt="Detail View" 
-                    className="w-full h-full object-contain bg-black/5"
-                  />
+                  src={selectedItem.images ? selectedItem.images[currentImageIndex] : selectedItem.image} 
+                  alt="Detail" 
+                  className="w-full h-full object-contain p-4 md:p-8"
+                />
                   {selectedItem.images && selectedItem.images.length > 1 && (
                     <div className="absolute inset-0 flex justify-between items-center px-4 opacity-0 group-hover:opacity-100 transition-opacity">
                        <button onClick={prevImage} className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg">←</button>
@@ -223,7 +206,6 @@ function App() {
               )}
             </div>
 
-            {/* DETAIL TEXT */}
             <div className="p-8 md:p-10 overflow-y-auto bg-white flex flex-col md:flex-row gap-8 h-auto">
               <div className="flex-1">
                 <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">{selectedItem.title}</h2>
@@ -236,9 +218,7 @@ function App() {
               <div className="flex-1 flex flex-col justify-between">
                 <p className="text-lg leading-relaxed text-gray-700 mb-8">{selectedItem.description}</p>
                 
-                {/* Tombol Action Berbeda untuk Project vs Sertifikat */}
                 <div className="flex gap-4">
-                  {/* Jika PDF, tampilkan tombol Download */}
                   {selectedItem.pdf && (
                      <a 
                       href={selectedItem.pdf} 
@@ -249,7 +229,6 @@ function App() {
                     </a>
                   )}
                   
-                  {/* Jika ada Link project (bukan #) */}
                   {selectedItem.link && selectedItem.link !== "#" && (
                     <a 
                       href={selectedItem.link} 

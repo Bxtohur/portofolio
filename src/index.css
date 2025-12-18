@@ -13,7 +13,6 @@
     scrollbar-width: none; 
   }
   
-  /* Animasi Teks Muncul */
   .animate-reveal {
     animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
@@ -32,7 +31,6 @@
   }
 }
 
-/* Background Noise Texture - Memberikan kesan "kertas mahal" */
 body {
   background-color: #fdfdfd;
   color: #050505;
