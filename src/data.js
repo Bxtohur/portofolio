@@ -71,17 +71,17 @@ export const projects = [
     ],
   },
   {
-    id: 5,
-  title: "Roblox Game : 'Kota Kuda'",
-  category: "Fullstack System",
-  description: "A professional web-based travel booking system designed for tourism companies to manage and sell travel packages efficiently. Features include online package reservations, customer data management, transaction tracking, and administrative dashboards for operational control.",
-  tech: ["Laravel", "Tailwind CSS", "MySQL"],
-    images: [
-      "./images/kk1.png",
-      "./images/kk2.png",
-      "./images/kk3.png",
-    ],
-  },
+  id: 5,
+  title: "Roblox Game: 'Kota Kuda'",
+  category: "Metaverse Experience",
+  description: "An immersive horse racing experience featuring a sprawling open-world map. Players can adopt horses, compete in intense races with real-time countdowns, and climb the global ranks. The game features a polished UI/UX designed for seamless navigation on mobile devices, custom cinematic camera systems, and interactive social features like passenger riding mechanics.",
+  tech: ["Roblox Lua", "Rojo", "Roblox Studio"],
+  images: [
+    "./images/kk1.png",
+    "./images/kk2.png",
+    "./images/kk3.png",
+  ],
+}
 ];
 
 export const certifications = [
