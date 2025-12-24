@@ -77,9 +77,9 @@ export const projects = [
   description: "A professional web-based travel booking system designed for tourism companies to manage and sell travel packages efficiently. Features include online package reservations, customer data management, transaction tracking, and administrative dashboards for operational control.",
   tech: ["Laravel", "Tailwind CSS", "MySQL"],
     images: [
-      "./images/kk1.jpg",
-      "./images/kk2.jpg",
-      "./images/kk3.jpg",
+      "./images/kk1.png",
+      "./images/kk2.png",
+      "./images/kk3.png",
     ],
   },
 ];
