@@ -1,7 +1,7 @@
 export const personalData = {
   name: "RIZAL M. NUR.",
   role: "FULLSTACK & AI ENGINEER",
-  bio: "Fullstack Engineer specializing in scalable web architecture and AI integration. I build robust systems that merge complex deep learning models with intuitive user interfaces. Focused on precision and clean code.",
+  bio: "Fullstack Engineer yang spesialis bikin arsitektur web scalable dan integrasi AI. Saya membangun sistem tangguh yang menggabungkan model deep learning kompleks dengan tampilan antarmuka yang intuitif. Fokus utama: presisi dan clean code.",
   profileImage: "./images/profil.png",
   cvFile: "./file/Fullstack - Rizal Muhaimin Nur.pdf",
   contact: {
@@ -18,15 +18,15 @@ export const skills = [
   "AI Engineering",
   "Tailwind CSS",
   "RESTful API Design",
-  "MySQL & Database Arch.",
+  "MySQL & DB Arch.",
 ];
 
 export const projects = [
   {
     id: 1,
     title: "Verified Certificate",
-    category: "Fullstack System",
-    description: "A secure certificate verification system designed to validate and authenticate digital credentials. Implements real-time verification, unique certificate identifiers, and centralized data management.",
+    category: "Sistem Fullstack",
+    description: "Sistem verifikasi sertifikat yang aman buat validasi dan autentikasi kredensial digital. Dilengkapi fitur verifikasi real-time, ID sertifikat unik, dan manajemen data terpusat yang anti-manipulasi.",
     tech: ["Laravel", "Vue.js", "MySQL"],
     images: [
       "./images/cert1.png",
@@ -37,8 +37,8 @@ export const projects = [
   {
     id: 2,
     title: "MULTIMODAL AI",
-    category: "Research & Dev",
-    description: "End-to-end deep learning system integrating Face Recognition, Pose Classification, and Emotion Analysis. Built with a Flask backend for model processing and React frontend for visualization.",
+    category: "Riset & Dev",
+    description: "Sistem deep learning hulu-ke-hilir yang menggabungkan Pengenalan Wajah, Klasifikasi Pose, dan Analisis Emosi. Dibangun pakai backend Flask buat otak pemrosesannya dan frontend React buat visualisasi datanya.",
     tech: ["React", "Flask", "Deep Learning"],
     images: [
       "./images/LandingPage.png",
@@ -49,8 +49,8 @@ export const projects = [
   {
     id: 3,
     title: "ABSENKU SYSTEM",
-    category: "Desktop App",
-    description: "Biometric attendance application utilizing YOLO-Face for real-time detection and ArcFace for high-accuracy recognition. Streamlines employee management with automated logging.",
+    category: "Aplikasi Desktop",
+    description: "Aplikasi absensi biometrik canggih pakai YOLO-Face buat deteksi real-time dan ArcFace buat pengenalan wajah akurasi tinggi. Bikin manajemen karyawan jadi otomatis, cepat, dan akurat.",
     tech: ["Python", "YOLO-Face", "Tkinter"],
     images: [
       "./images/absenku.jpg",
@@ -60,10 +60,10 @@ export const projects = [
   },
   {
     id: 4,
-  title: "Travel Package Booking System",
-  category: "Fullstack System",
-  description: "A professional web-based travel booking system designed for tourism companies to manage and sell travel packages efficiently. Features include online package reservations, customer data management, transaction tracking, and administrative dashboards for operational control.",
-  tech: ["Laravel", "Tailwind CSS", "MySQL"],
+    title: "Travel Package Booking",
+    category: "Sistem Fullstack",
+    description: "Sistem booking travel berbasis web profesional buat perusahaan wisata mengatur dan menjual paket liburan dengan efisien. Fiturnya lengkap: reservasi paket online, manajemen data pelanggan, pelacakan transaksi, sampai dashboard admin buat kontrol operasional.",
+    tech: ["Laravel", "Tailwind CSS", "MySQL"],
     images: [
       "./images/ecom1.jpg",
       "./images/ecom2.png",
@@ -71,25 +71,37 @@ export const projects = [
     ],
   },
   {
-  id: 5,
-  title: "Roblox Game: 'Kota Kuda'",
-  category: "Metaverse Experience",
-  description: "An immersive horse racing experience featuring a sprawling open-world map. Players can adopt horses, compete in intense races with real-time countdowns, and climb the global ranks. The game features a polished UI/UX designed for seamless navigation on mobile devices, custom cinematic camera systems, and interactive social features like passenger riding mechanics.",
-  tech: ["Roblox Lua", "Rojo", "Roblox Studio"],
-  images: [
-    "./images/kk1.png",
-    "./images/kk2.png",
-    "./images/kk3.png",
-  ],
-}
+    id: 5,
+    title: "Roblox Game: 'Kota Kuda'",
+    category: "Pengalaman Metaverse",
+    description: "Game balap kuda imersif di peta open-world yang luas. Pemain bisa adopsi kuda, balapan sengit dengan hitungan mundur real-time, dan panjat rank global. UI/UX-nya didesain mulus buat HP, ada sistem kamera sinematik, dan fitur sosial seru kayak boncengan kuda.",
+    tech: ["Roblox Lua", "Rojo", "Roblox Studio"],
+    images: [
+      "./images/kk1.png",
+      "./images/kk2.png",
+      "./images/kk3.png",
+    ],
+  },
+  {
+    id: 6,
+    title: "Metcha",
+    category: "Fullstack System",
+    description: "Platform kencan eksklusif yang dirancang buat nemuin koneksi yang 'klik' banget. Fokusnya bukan cuma swipe kanan-kiri, tapi algoritma matching yang presisi buat nyatuin personalitas yang cocok. Dibungkus dengan UI/UX modern yang clean, fitur chat real-time yang responsif, dan sistem privasi yang aman. Bikin pengalaman nyari jodoh jadi smooth dan nggak ribet.",
+    tech: ["Laravel", "React.js", "WebSockets"],
+    images: [
+      "./images/metcha1.png",
+      "./images/metcha2.png",
+      "./images/metcha3.png",
+    ],
+  }
 ];
 
 export const certifications = [
   {
     id: 101,
     title: "IoT Engineer",
-    category: "Certification",
-    description: "Comprehensive engineering certification covering sensor integration, microcontroller programming, and network protocols. Achieved a high proficiency Band Score of 88.75.",
+    category: "Sertifikasi",
+    description: "Sertifikasi teknik komprehensif yang ngebahas integrasi sensor, pemrograman mikrokontroler, dan protokol jaringan. Lulus dengan Band Score tinggi: 88.75.",
     tech: ["Indobot Academy", "Jun 2024"],
     image: "./images/cert-iot.png",
     pdf: "./certificates/cert-iot.pdf",
@@ -98,8 +110,8 @@ export const certifications = [
   {
     id: 102,
     title: "Android Developer",
-    category: "Certification",
-    description: "Intensive bootcamp specializing in Mobile Architecture and Kotlin. Mastered UI/UX implementation and API integration with a near-perfect Hard Skill Score of 4.9/5.0.",
+    category: "Sertifikasi",
+    description: "Bootcamp intensif spesialis Arsitektur Mobile dan Kotlin. Menguasai implementasi UI/UX dan integrasi API dengan Skor Hard Skill nyaris sempurna: 4.9/5.0.",
     tech: ["Binar Academy", "Jan 2024"],
     image: "./images/cert-androiddev.png",
     pdf: "./certificates/cert-androiddev.pdf",
@@ -108,9 +120,9 @@ export const certifications = [
   {
     id: 103,
     title: "IT Specialist: Databases",
-    category: "Certification",
-    description: "International standard certification validating expertise in Database Design, SQL Querying, and Relational Database Management Systems (RDBMS).",
-    tech: ["IT Specialist", "Aug 2024"],
+    category: "Sertifikasi",
+    description: "Sertifikasi standar internasional yang memvalidasi keahlian dalam Desain Database, SQL Querying, dan Relational Database Management Systems (RDBMS).",
+    tech: ["IT Specialist", "Agu 2024"],
     image: "./images/cert-databases.png",
     pdf: "./certificates/cert-databases.pdf",
     link: "#",
@@ -118,8 +130,8 @@ export const certifications = [
   {
     id: 104,
     title: "IoT Business Practitioner",
-    category: "Certification",
-    description: "Professional certification (IoTBIZ) focusing on the strategic business potential of IoT ecosystems, project planning, and corporate implementation.",
+    category: "Sertifikasi",
+    description: "Sertifikasi profesional (IoTBIZ) yang fokus pada potensi strategis bisnis ekosistem IoT, perencanaan proyek, dan implementasi di level korporat.",
     tech: ["CertNexus", "Nov 2024"],
     image: "./images/cert-iotBIZ.png",
     pdf: "./certificates/cert-iotBIZ.pdf",
@@ -128,9 +140,9 @@ export const certifications = [
   {
     id: 105,
     title: "Junior Web Developer",
-    category: "BNSP License",
-    description: "National Professional Certification (BNSP) demonstrating official competence in web programming, interface design, and backend logic according to industry standards.",
-    tech: ["VSGA Kominfo", "Aug 2023"],
+    category: "Lisensi BNSP",
+    description: "Sertifikasi Profesi Nasional (BNSP) sebagai bukti kompetensi resmi dalam pemrograman web, desain antarmuka, dan logika backend sesuai standar industri Indonesia.",
+    tech: ["VSGA Kominfo", "Agu 2023"],
     image: "./images/cert-jwd.png",
     pdf: "./certificates/cert-jwd.pdf",
     link: "#",

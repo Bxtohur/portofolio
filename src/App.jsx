@@ -34,6 +34,9 @@ function App() {
     }
   };
 
+  // Menu navigasi dalam Bahasa Indonesia
+  const navItems = ["Karya", "Sertifikasi", "Kontak"];
+
   return (
     <div className="min-h-screen max-w-[1440px] mx-auto bg-[#fdfdfd] text-black font-sans selection:bg-black selection:text-white border-x border-black/10 relative">
       
@@ -42,7 +45,7 @@ function App() {
           {personalData.name}
         </div>
         <nav className="hidden md:flex gap-6">
-          {["Work", "Certifications", "Contact"].map((item) => (
+          {navItems.map((item) => (
             <a key={item} href={`#${item.toLowerCase()}`} className="text-xs font-bold uppercase tracking-widest hover:line-through transition-all">
               {item}
             </a>
@@ -61,16 +64,16 @@ function App() {
               {personalData.bio}
             </p>
             <div className="mt-8 flex gap-4 animate-reveal delay-200">
-              <a href="#contact" className="bg-black text-white px-8 py-4 font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors border border-black">
-                Available for hire
+              <a href="#kontak" className="bg-black text-white px-8 py-4 font-bold uppercase tracking-wide hover:bg-gray-800 transition-colors border border-black">
+                Siap Bekerja
               </a>
               <a href={personalData.cvFile} download className="bg-white text-black px-8 py-4 font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors border border-black flex items-center gap-2">
-                Download CV <span className="text-xl">↓</span>
+                Unduh CV <span className="text-xl">↓</span>
               </a>
             </div>
           </div>
           <div className="w-full md:w-[400px] h-[500px] bg-gray-200 relative overflow-hidden animate-reveal delay-300 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-            <img src={personalData.profileImage} alt="Profile" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100" />
+            <img src={personalData.profileImage} alt="Profil" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-105 hover:scale-100" />
             <div className="absolute inset-0 bg-black/10 mix-blend-multiply pointer-events-none"></div>
           </div>
         </div>
@@ -91,10 +94,10 @@ function App() {
         </div>
       </div>
 
-      <section id="work" className="bg-white">
+      <section id="karya" className="bg-white">
         <div className="px-6 py-12 border-b border-black flex justify-between items-end">
-          <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-400">Selected Works</h2>
-          <span className="text-sm font-bold uppercase tracking-[0.2em]">2023 — 2025</span>
+          <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-gray-400">Karya Terpilih</h2>
+          <span className="text-sm font-bold uppercase tracking-[0.2em]">2023 — 2026</span>
         </div>
         <div>
           {projects.map((project) => (
@@ -105,7 +108,7 @@ function App() {
                    <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter transform transition-transform duration-300 group-hover:translate-x-4">{project.title}</h3>
                 </div>
                 <div className="mt-4 md:mt-0 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
-                  <span className="font-bold uppercase tracking-widest text-sm">View Case</span>
+                  <span className="font-bold uppercase tracking-widest text-sm">Lihat Detail</span>
                   <span className="text-2xl">→</span>
                 </div>
               </div>
@@ -114,9 +117,9 @@ function App() {
         </div>
       </section>
 
-      <section id="certifications" className="bg-gray-50">
+      <section id="sertifikasi" className="bg-gray-50">
         <div className="px-4 md:px-8 py-8 border-b-2 border-black bg-white">
-          <h2 className="text-xl font-black uppercase tracking-tighter">Licenses & Certifications</h2>
+          <h2 className="text-xl font-black uppercase tracking-tighter">Lisensi & Sertifikasi</h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-b-2 border-black">
@@ -128,15 +131,15 @@ function App() {
             >
               <div className="aspect-[4/3] w-full p-8 border-b-2 border-black bg-gray-100 flex items-center justify-center overflow-hidden relative">
                  <img 
-                    src={cert.image} 
-                    alt={cert.title} 
-                    className="w-full h-full object-contain shadow-lg transform grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                  />
-                  {cert.pdf && (
-                    <div className="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded z-10">
-                      PDF
-                    </div>
-                  )}
+                   src={cert.image} 
+                   alt={cert.title} 
+                   className="w-full h-full object-contain shadow-lg transform grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                 />
+                 {cert.pdf && (
+                   <div className="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded z-10">
+                     PDF
+                   </div>
+                 )}
               </div>
 
               <div className="p-6">
@@ -153,20 +156,20 @@ function App() {
         </div>
       </section>
 
-      <section id="contact" className="grid grid-cols-1 md:grid-cols-2 border-b border-black bg-gray-50">
+      <section id="kontak" className="grid grid-cols-1 md:grid-cols-2 border-b border-black bg-gray-50">
         <div className="p-12 md:p-24 border-b md:border-b-0 md:border-r border-black flex flex-col justify-between">
-          <div><h2 className="text-5xl font-black uppercase tracking-tighter mb-8 leading-none">Let's build <br/>something <br/>solid.</h2></div>
+          <div><h2 className="text-5xl font-black uppercase tracking-tighter mb-8 leading-none">Mari bangun <br/>sesuatu <br/>yang hebat.</h2></div>
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-gray-500">Email Me</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-gray-500">Email Saya</span>
             <a href={`mailto:${personalData.contact.email}`} className="text-xl md:text-2xl font-bold underline decoration-2 underline-offset-4 hover:bg-black hover:text-white transition-colors inline-block w-max px-1">{personalData.contact.email}</a>
           </div>
         </div>
         <div className="p-12 md:p-24 flex flex-col justify-center gap-8 bg-white">
           <div className="space-y-6">
-            <a href={personalData.contact.linkedin} target="_blank" className="flex items-center justify-between border-b border-black pb-4 group hover:pl-4 transition-all">
+            <a href={personalData.contact.linkedin} target="_blank" rel="noreferrer" className="flex items-center justify-between border-b border-black pb-4 group hover:pl-4 transition-all">
               <span className="text-2xl font-bold uppercase">LinkedIn</span><span className="group-hover:-rotate-45 transition-transform duration-300">→</span>
             </a>
-            <a href={personalData.contact.github} target="_blank" className="flex items-center justify-between border-b border-black pb-4 group hover:pl-4 transition-all">
+            <a href={personalData.contact.github} target="_blank" rel="noreferrer" className="flex items-center justify-between border-b border-black pb-4 group hover:pl-4 transition-all">
               <span className="text-2xl font-bold uppercase">GitHub</span><span className="group-hover:-rotate-45 transition-transform duration-300">→</span>
             </a>
           </div>
@@ -174,7 +177,7 @@ function App() {
       </section>
 
       <footer className="py-8 text-center text-xs font-mono uppercase tracking-widest text-gray-400">
-        © {new Date().getFullYear()} Rizal M. Nur — Engineered with Precision.
+        © {new Date().getFullYear()} Rizal M. Nur — Dirancang dengan Presisi.
       </footer>
 
       {selectedItem && (
@@ -187,7 +190,7 @@ function App() {
                 <iframe 
                   src={`${selectedItem.pdf}#toolbar=0`} 
                   className="w-full h-full" 
-                  title="Certificate PDF"
+                  title="PDF Sertifikat"
                 ></iframe>
               ) : (
                 <>
@@ -198,8 +201,8 @@ function App() {
                 />
                   {selectedItem.images && selectedItem.images.length > 1 && (
                     <div className="absolute inset-0 flex justify-between items-center px-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                       <button onClick={prevImage} className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg">←</button>
-                       <button onClick={nextImage} className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg">→</button>
+                        <button onClick={prevImage} className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg">←</button>
+                        <button onClick={nextImage} className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg">→</button>
                     </div>
                   )}
                 </>
@@ -220,12 +223,12 @@ function App() {
                 
                 <div className="flex gap-4">
                   {selectedItem.pdf && (
-                     <a 
+                      <a 
                       href={selectedItem.pdf} 
                       download
                       className="flex-1 text-center bg-white text-black border border-black py-4 font-bold uppercase tracking-widest hover:bg-gray-100 transition-colors"
                     >
-                      Download PDF ↓
+                      Unduh PDF ↓
                     </a>
                   )}
                   
@@ -236,7 +239,7 @@ function App() {
                       rel="noreferrer"
                       className="flex-1 text-center bg-black text-white py-4 font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors"
                     >
-                      {selectedItem.pdf ? "Verify Online" : "View Live"}
+                      {selectedItem.pdf ? "Verifikasi Online" : "Lihat Langsung"}
                     </a>
                   )}
                 </div>
