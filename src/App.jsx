@@ -233,17 +233,6 @@ export default function App() {
         <div className="absolute bottom-10 right-20 w-16 h-16 border-4 border-black bg-[#00ffcc] -z-10 transform rotate-45" />
 
         <div className="lg:col-span-7 space-y-6">
-          {/* Badge */}
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ type: "spring", stiffness: 200 }}
-            className="inline-flex items-center gap-2 bg-[#ffff00] border-3 border-black px-4 py-2 text-xs md:text-sm font-black uppercase tracking-widest shadow-[3px_3px_0px_0px_#000] transform -rotate-2"
-          >
-            <Sparkles className="w-5 h-5 fill-red-500 text-black stroke-[2px]" />
-            SOLUSI NYATA UNTUK IDE EKSTREM ANDA
-          </motion.div>
-
           {/* Heading */}
           <div className="relative">
             <h1 className="text-[12vw] sm:text-[8vw] lg:text-[5.5rem] leading-[0.9] font-black uppercase tracking-tighter text-black select-none">
