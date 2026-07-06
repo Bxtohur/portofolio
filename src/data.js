@@ -32,7 +32,7 @@ export const projects = [
     description:
       "Portal statistik dan profil resmi Desa Jagara, dirancang untuk program Desa Cantik (Cinta Statistik) oleh Badan Pusat Statistik (BPS) Kuningan, Jawa Barat. Membantu digitalisasi data kependudukan, pendidikan, kesehatan, dan publikasi desa secara transparan dan mudah diakses oleh seluruh warga desa.",
     tech: ["Laravel", "Bootstrap", "MySQL", "GIS & Maps Integration"],
-    images: ["./images/cert1.png"], // Placeholder / will use default screenshots or fallback if no images yet
+    images: ["./images/jagara.png"],
     link: "https://jagara.jastik.site",
   },
   {
@@ -42,7 +42,7 @@ export const projects = [
     description:
       "Platform resmi Sekretariat Bersama forum kerja sama 10 daerah perbatasan Jawa Barat dan Jawa Tengah (Kuningan, Cirebon, Brebes, Cilacap, Ciamis, Majalengka, Indramayu, Banjar, Pangandaran). Dilengkapi visualisasi peta wilayah interaktif, direktori potensi daerah (kuliner, pariwisata, UMKM), dan manajemen dokumen dinamis.",
     tech: ["Laravel", "Tailwind CSS", "Interactive SVG Map", "MySQL"],
-    images: ["./images/LandingPage.png"],
+    images: ["./images/LandingPage.png"], // Gunakan preview map bawaan repository karena live sedang memuat bermasalah CSS
     link: "https://kuncibersama.or.id",
   },
   {
@@ -52,7 +52,7 @@ export const projects = [
     description:
       "Platform kecerdasan buatan adaptif yang dirancang khusus untuk mengukur dan meningkatkan Literasi Digital Kritis (Critical Digital Literacy) guru-guru di Indonesia. Dilengkapi model klasifikasi berbasis IndoBERT untuk mendeteksi 6 jenis bias kognitif dan framing secara otomatis dengan akurasi tinggi serta sistem tes adaptif.",
     tech: ["React.js", "FastAPI / Python", "IndoBERT Model", "PostgreSQL"],
-    images: ["./images/Analisis.png"],
+    images: ["./images/cdl.png"],
     link: "https://cdl-ai.id",
   },
   {
