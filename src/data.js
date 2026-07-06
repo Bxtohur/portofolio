@@ -1,7 +1,7 @@
 export const personalData = {
   name: "RIZAL M. NUR.",
-  role: "FULLSTACK WEB DEVELOPER",
-  bio: "Fullstack Developer with experience in building and maintaining web-based applications, including systems that integrate AI or machine learning features. Focused on writing maintainable code and developing functional, user-friendly interfaces.",
+  role: "FULLSTACK WEB DEVELOPER & ARTIFICIAL INTELLIGENCE SPECIALIST",
+  bio: "Seorang Fullstack Developer gila kerja yang suka bikin aplikasi web kencang, responsif, dan terintegrasi AI. Menghidupkan ide-ide rumit menjadi sistem interaktif yang ramah pengguna. Tidak suka basa-basi, fokus ke hasil nyata dan performa tinggi.",
   profileImage: "./images/profil.png",
   cvFile: "./file/Fullstack - Rizal Muhaimin Nur.pdf",
   contact: {
@@ -12,45 +12,76 @@ export const personalData = {
 };
 
 export const skills = [
-  "Laravel & Vue.js",
+  "Laravel",
+  "Vue.js",
   "React.js",
-  "Python",
-  "AI Integration",
+  "Node.js",
+  "Next.js",
+  "Python & AI Model",
   "Tailwind CSS",
-  "RESTful API Development",
-  "MySQL",
+  "RESTful API & WebSockets",
+  "MySQL & PostgreSQL",
+  "UI / UX Design",
 ];
 
 export const projects = [
   {
     id: 1,
-    title: "Verified Certificate",
-    category: "Fullstack System",
+    title: "Desa Jagara (jagara.jastik.site)",
+    category: "Desa Cantik BPS",
     description:
-      "A web-based certificate verification system designed to validate digital credentials through unique certificate IDs and centralized data storage.",
-    tech: ["Laravel", "Vue.js", "MySQL"],
-    images: ["./images/cert1.png", "./images/cert2.png", "./images/cert3.png"],
+      "Portal statistik dan profil resmi Desa Jagara, dirancang untuk program Desa Cantik (Cinta Statistik) oleh Badan Pusat Statistik (BPS) Kuningan, Jawa Barat. Membantu digitalisasi data kependudukan, pendidikan, kesehatan, dan publikasi desa secara transparan dan mudah diakses oleh seluruh warga desa.",
+    tech: ["Laravel", "Bootstrap", "MySQL", "GIS & Maps Integration"],
+    images: ["./images/cert1.png"], // Placeholder / will use default screenshots or fallback if no images yet
+    link: "https://jagara.jastik.site",
   },
   {
     id: 2,
-    title: "Multimodal AI",
-    category: "Research & Development",
+    title: "KUNCI BERSAMA (kuncibersama.or.id)",
+    category: "Corporate Portal & GIS Map",
     description:
-      "A deep learning-based system combining face recognition, pose classification, and emotion analysis, supported by a Flask backend and React-based data visualization.",
-    tech: ["React", "Flask", "Deep Learning"],
+      "Platform resmi Sekretariat Bersama forum kerja sama 10 daerah perbatasan Jawa Barat dan Jawa Tengah (Kuningan, Cirebon, Brebes, Cilacap, Ciamis, Majalengka, Indramayu, Banjar, Pangandaran). Dilengkapi visualisasi peta wilayah interaktif, direktori potensi daerah (kuliner, pariwisata, UMKM), dan manajemen dokumen dinamis.",
+    tech: ["Laravel", "Tailwind CSS", "Interactive SVG Map", "MySQL"],
+    images: ["./images/LandingPage.png"],
+    link: "https://kuncibersama.or.id",
+  },
+  {
+    id: 3,
+    title: "CritLit (cdl-ai.id)",
+    category: "Adaptive AI Education Platform",
+    description:
+      "Platform kecerdasan buatan adaptif yang dirancang khusus untuk mengukur dan meningkatkan Literasi Digital Kritis (Critical Digital Literacy) guru-guru di Indonesia. Dilengkapi model klasifikasi berbasis IndoBERT untuk mendeteksi 6 jenis bias kognitif dan framing secara otomatis dengan akurasi tinggi serta sistem tes adaptif.",
+    tech: ["React.js", "FastAPI / Python", "IndoBERT Model", "PostgreSQL"],
+    images: ["./images/Analisis.png"],
+    link: "https://cdl-ai.id",
+  },
+  {
+    id: 4,
+    title: "Verified Certificate System",
+    category: "Enterprise Fullstack System",
+    description:
+      "Sistem verifikasi sertifikat berbasis web untuk memvalidasi kredensial digital secara instan melalui ID sertifikat unik atau QR Code. Menghindari pemalsuan sertifikat secara efektif dengan sistem enkripsi dan penyimpanan data terpusat.",
+    tech: ["Laravel", "Vue.js", "MySQL", "QR Code Engine"],
+    images: ["./images/cert2.png", "./images/cert3.png"],
+  },
+  {
+    id: 5,
+    title: "Multimodal AI Analysis System",
+    category: "R&D Deep Learning Project",
+    description:
+      "Sistem analisis kecerdasan buatan multimodal yang menggabungkan pengenalan wajah (Face Recognition), klasifikasi pose tubuh, dan deteksi emosi real-time. Dilengkapi visualisasi data interaktif untuk dashboard analytics.",
+    tech: ["React", "Flask", "Deep Learning / ArcFace", "YOLO-Face"],
     images: [
-      "./images/LandingPage.png",
-      "./images/Analisis.png",
       "./images/Transkripsi.png",
     ],
   },
   {
-    id: 3,
+    id: 6,
     title: "ABSENKU System",
-    category: "Desktop Application",
+    category: "Biometric Attendance App",
     description:
-      "A biometric attendance application utilizing YOLO-Face for detection and ArcFace for facial recognition to support automated attendance tracking.",
-    tech: ["Python", "YOLO-Face", "Tkinter"],
+      "Aplikasi absensi biometrik berbasis desktop menggunakan kamera lokal. Mendeteksi dan memverifikasi wajah karyawan dalam waktu kurang dari 1 detik menggunakan model YOLO-Face untuk deteksi wajah dan ArcFace untuk ekstraksi fitur.",
+    tech: ["Python", "YOLO-Face", "ArcFace", "Tkinter GUI"],
     images: [
       "./images/absenku.jpg",
       "./images/absenku1.jpg",
@@ -58,30 +89,30 @@ export const projects = [
     ],
   },
   {
-    id: 4,
+    id: 7,
     title: "Travel Package Booking",
-    category: "Fullstack System",
+    category: "E-Commerce System",
     description:
-      "A web-based booking system that allows travel agencies to manage reservations, customer data, and transactions through an administrative dashboard.",
-    tech: ["Laravel", "Tailwind CSS", "MySQL"],
+      "Sistem pemesanan paket wisata lengkap dengan dashboard admin interaktif untuk mengelola inventaris paket liburan, pemesanan pelanggan, transaksi, dan integrasi payment gateway.",
+    tech: ["Laravel", "Tailwind CSS", "MySQL", "Payment Gateway"],
     images: ["./images/ecom1.jpg", "./images/ecom2.png", "./images/ecom3.png"],
   },
   {
-    id: 5,
+    id: 8,
     title: "Roblox Game: 'Kota Kuda'",
-    category: "Game Project",
+    category: "3D Multiplayer Game",
     description:
-      "An open-world horse racing game where players can adopt horses, participate in races, and interact with other players in a shared environment.",
-    tech: ["Roblox Lua", "Rojo", "Roblox Studio"],
+      "Game dunia terbuka (open-world) bertema pacuan kuda di Roblox. Pemain dapat mengadopsi berbagai jenis kuda, melatih performa, menantang pemain lain dalam arena balapan, dan menjelajahi peta petualangan yang luas.",
+    tech: ["Roblox Lua", "Rojo Development Tool", "Roblox Studio"],
     images: ["./images/kk1.png", "./images/kk2.png", "./images/kk3.png"],
   },
   {
-    id: 6,
+    id: 9,
     title: "Metcha",
-    category: "Fullstack System",
+    category: "Real-Time Matching Platform",
     description:
-      "A web-based platform that includes user matching features and real-time chat functionality, supported by WebSocket-based communication.",
-    tech: ["Laravel", "React.js", "WebSockets"],
+      "Platform sosial interaktif yang mempertemukan pengguna dengan minat yang sama melalui kecocokan profil (matching) dan ruang obrolan langsung (real-time chat) berbasis WebSockets.",
+    tech: ["Laravel", "React.js", "WebSockets / Pusher", "Tailwind CSS"],
     images: [
       "./images/metcha1.png",
       "./images/metcha2.png",
@@ -96,7 +127,7 @@ export const certifications = [
     title: "IoT Engineer",
     category: "Certification",
     description:
-      "Technical certification covering sensor integration, microcontroller programming, and network communication fundamentals.",
+      "Sertifikasi kompetensi teknis yang mencakup integrasi sensor, pemrograman mikrokontroler (Arduino/ESP32), dan protokol komunikasi IoT.",
     tech: ["Indobot Academy", "Jun 2024"],
     image: "./images/cert-iot.png",
     pdf: "./certificates/cert-iot.pdf",
@@ -107,7 +138,7 @@ export const certifications = [
     title: "Android Developer",
     category: "Certification",
     description:
-      "Bootcamp-based certification focused on mobile application architecture, UI implementation, and API integration using Kotlin.",
+      "Sertifikasi bootcamp intensif yang berfokus pada arsitektur aplikasi mobile Android modern, UI/UX Material Design, dan integrasi API menggunakan Kotlin.",
     tech: ["Binar Academy", "Jan 2024"],
     image: "./images/cert-androiddev.png",
     pdf: "./certificates/cert-androiddev.pdf",
@@ -118,7 +149,7 @@ export const certifications = [
     title: "IT Specialist: Databases",
     category: "Certification",
     description:
-      "Certification validating knowledge in database design, SQL querying, and relational database management systems.",
+      "Sertifikasi keahlian dalam perancangan database relasional, optimasi kueri SQL kompleks, dan manajemen basis data skala enterprise.",
     tech: ["IT Specialist", "Aug 2024"],
     image: "./images/cert-databases.png",
     pdf: "./certificates/cert-databases.pdf",
@@ -129,7 +160,7 @@ export const certifications = [
     title: "IoT Business Practitioner",
     category: "Certification",
     description:
-      "Certification focused on the business and implementation aspects of IoT projects.",
+      "Sertifikasi internasional yang berfokus pada aspek kelayakan bisnis, strategi pasar, dan implementasi industri untuk proyek berbasis Internet of Things.",
     tech: ["CertNexus", "Nov 2024"],
     image: "./images/cert-iotBIZ.png",
     pdf: "./certificates/cert-iotBIZ.pdf",
@@ -140,7 +171,7 @@ export const certifications = [
     title: "Junior Web Developer",
     category: "BNSP License",
     description:
-      "National professional certification demonstrating competency in web development fundamentals.",
+      "Lisensi profesi nasional dari Badan Nasional Sertifikasi Profesi (BNSP) yang memvalidasi kompetensi fundamental dalam pengembangan aplikasi web.",
     tech: ["VSGA Kominfo", "Aug 2023"],
     image: "./images/cert-jwd.png",
     pdf: "./certificates/cert-jwd.pdf",

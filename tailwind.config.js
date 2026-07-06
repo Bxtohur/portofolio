@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'Helvetica', 'Arial', 'sans-serif'],
+        mono: ['"Share Tech Mono"', 'Courier New', 'Courier', 'monospace'],
+        sans: ['"Space Grotesk"', 'sans-serif'],
       },
       colors: {
         black: '#000000',
@@ -15,6 +16,9 @@ export default {
       },
       borderWidth: {
         3: '3px',
+        4: '4px',
+        6: '6px',
+        8: '8px',
       }
     },
   },
