@@ -241,7 +241,7 @@ export default function App() {
             className="inline-flex items-center gap-2 bg-[#ffff00] border-3 border-black px-4 py-2 text-xs md:text-sm font-black uppercase tracking-widest shadow-[3px_3px_0px_0px_#000] transform -rotate-2"
           >
             <Sparkles className="w-5 h-5 fill-red-500 text-black stroke-[2px]" />
-            SANG MASTER KODE DATANG BERSAMA SOLUSI NYATA
+            SOLUSI NYATA UNTUK IDE EKSTREM ANDA
           </motion.div>
 
           {/* Heading */}
