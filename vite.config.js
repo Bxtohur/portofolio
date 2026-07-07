@@ -3,5 +3,6 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/portofolio/',
+  // Vercel serves from the domain root; GitHub Pages serves from /portofolio/.
+  base: process.env.VERCEL ? '/' : '/portofolio/',
 })

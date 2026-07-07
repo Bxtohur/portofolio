@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import { personalData, skills, projects, certifications } from "./data";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import { 
-  Github, 
-  Mail, 
-  ExternalLink, 
-  ArrowUpRight, 
-  Download, 
-  Cpu, 
-  Code, 
-  Smartphone, 
-  Sparkles, 
-  Briefcase, 
-  Award, 
-  ChevronLeft, 
-  ChevronRight, 
-  X, 
+import {
+  Github,
+  Mail,
+  ExternalLink,
+  ArrowUpRight,
+  Download,
+  Cpu,
+  Code,
+  Smartphone,
+  Sparkles,
+  Briefcase,
+  Award,
+  ChevronLeft,
+  ChevronRight,
+  X,
   Send,
   CornerRightDown,
   Volume2,
@@ -59,10 +59,51 @@ const PixelGrid = () => {
 
 const Scanlines = () => {
   return (
-    <div className="fixed inset-0 pointer-events-none z-[999] opacity-[0.04] mix-blend-overlay bg-repeat" style={{
-      backgroundImage: `linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%)`,
+    <div className="fixed inset-0 pointer-events-none z-[999] opacity-[0.05] bg-repeat" style={{
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5) 50%)`,
       backgroundSize: '100% 4px'
     }} />
+  );
+};
+
+// Horizontal neobrutalism carousel used when cards don't fit a single screen.
+const Carousel = ({ children, onNav }) => {
+  const trackRef = useRef(null);
+
+  const scrollByCard = (dir) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const card = el.querySelector("[data-card]");
+    const amount = card ? card.offsetWidth + 24 : el.clientWidth * 0.8;
+    el.scrollBy({ left: dir * amount, behavior: "smooth" });
+    if (onNav) onNav();
+  };
+
+  return (
+    <div className="relative w-full flex items-center">
+      <button
+        aria-label="Sebelumnya"
+        onClick={() => scrollByCard(-1)}
+        className="hidden md:flex shrink-0 z-20 w-12 h-12 mr-3 bg-white border-4 border-black items-center justify-center shadow-[4px_4px_0px_0px_#000] hover:bg-yellow-300 active:translate-x-1 active:translate-y-1 active:shadow-[1px_1px_0px_0px_#000] transition-all"
+      >
+        <ChevronLeft className="w-6 h-6 stroke-[3px]" />
+      </button>
+
+      <div
+        ref={trackRef}
+        className="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar py-6 px-1 w-full"
+      >
+        {children}
+      </div>
+
+      <button
+        aria-label="Berikutnya"
+        onClick={() => scrollByCard(1)}
+        className="hidden md:flex shrink-0 z-20 w-12 h-12 ml-3 bg-white border-4 border-black items-center justify-center shadow-[4px_4px_0px_0px_#000] hover:bg-yellow-300 active:translate-x-1 active:translate-y-1 active:shadow-[1px_1px_0px_0px_#000] transition-all"
+      >
+        <ChevronRight className="w-6 h-6 stroke-[3px]" />
+      </button>
+    </div>
   );
 };
 
@@ -169,360 +210,440 @@ export default function App() {
   });
 
   return (
-    <div className={`min-h-screen bg-[#FFFbeb] text-black font-mono selection:bg-[#ff0055] selection:text-white relative overflow-x-hidden ${easterEggActive ? "animate-[shake_0.5s_infinite]" : ""}`}>
+    <div className={`h-screen flex flex-col bg-[#FFFbeb] text-black font-mono selection:bg-[#ff0055] selection:text-white relative overflow-hidden ${easterEggActive ? "animate-[shake_0.5s_infinite]" : ""}`}>
       <PixelGrid />
       <Scanlines />
 
-      {/* Retro Marquee Banner */}
-      <div className="bg-[#ff0055] text-white py-3 border-b-4 border-black font-black uppercase text-sm md:text-base flex overflow-x-hidden select-none z-50 relative">
-        <div className="flex animate-marquee whitespace-nowrap gap-12">
-          {Array.from({ length: 4 }).map((_, idx) => (
-            <span key={idx} className="inline-flex items-center gap-4">
-              <Zap className="fill-yellow-300 stroke-black stroke-[3px] animate-bounce w-5 h-5" />
-              <span>SUPERCHARGED WEB EXPERIENCES</span>
-              <span className="w-3 h-3 bg-black border-2 border-white rounded-none transform rotate-45" />
-              <span>FULLSTACK EXPERT & AI WIZARD</span>
-              <span className="w-3 h-3 bg-black border-2 border-white rounded-none transform rotate-45" />
-              <span>NO EM-DASHES DETECTED</span>
-              <span className="w-3 h-3 bg-black border-2 border-white rounded-none transform rotate-45" />
-              <span>100% CLIENT SATISFACTION</span>
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Main Header / Navigation */}
-      <header className="sticky top-0 z-40 bg-[#00ffcc] border-b-4 border-black px-6 py-4 flex justify-between items-center shadow-[4px_4px_0px_0px_#000] transition-transform duration-300 hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_#000]">
-        <motion.div 
-          onClick={triggerChaos}
-          whileHover={{ scale: 1.05, rotate: [-1, 1, -1] }}
-          className="text-xl md:text-2xl font-black tracking-tighter uppercase border-4 border-black bg-yellow-300 px-4 py-2 hover:bg-[#ff0055] hover:text-white transition-colors cursor-pointer shadow-[3px_3px_0px_0px_#000] select-none active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_#000]"
-        >
-          🦖 {personalData.name}
-        </motion.div>
-        
-        <nav className="hidden md:flex gap-4">
-          {["WORKS", "CERTIFICATIONS", "CONTACT"].map((item) => (
-            <motion.a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              whileHover={{ scale: 1.1, rotate: Math.random() * 6 - 3 }}
-              className="text-sm font-black uppercase tracking-wider px-3 py-2 bg-white border-3 border-black shadow-[3px_3px_0px_0px_#000] hover:bg-yellow-300 transition-colors"
-            >
-              {item}
-            </motion.a>
-          ))}
-        </nav>
-
-        <motion.button 
-          whileTap={{ scale: 0.9 }}
-          onClick={() => {
-            playSound(700, "square", 0.2);
-            window.location.href = `mailto:${personalData.contact.email}`;
-          }}
-          className="md:hidden p-2 border-3 border-black bg-white shadow-[2px_2px_0px_0px_#000] font-bold"
-        >
-          HUKUM
-        </motion.button>
-      </header>
-
-      {/* Hero Section */}
-      <section className="relative pt-12 pb-24 px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        {/* Decorative Grid items */}
-        <div className="absolute top-2 left-10 w-12 h-12 border-4 border-black bg-[#ff00ff] -z-10 transform -rotate-12 animate-pulse" />
-        <div className="absolute bottom-10 right-20 w-16 h-16 border-4 border-black bg-[#00ffcc] -z-10 transform rotate-45" />
-
-        <div className="lg:col-span-7 space-y-6">
-          {/* Heading */}
-          <div className="relative">
-            <h1 className="text-[12vw] sm:text-[8vw] lg:text-[5.5rem] leading-[0.9] font-black uppercase tracking-tighter text-black select-none">
-              BUAT WEB <br />
-              <span className="bg-[#ff9900] px-4 inline-block border-4 border-black transform skew-x-3 rotate-1 hover:rotate-[-1deg] hover:bg-[#00ffcc] transition-all shadow-[6px_6px_0px_0px_#000]">
-                GILA KENCANG
-              </span> <br />
-              DENGAN AI!
-            </h1>
-          </div>
-
-          {/* Bio Description */}
-          <p className="text-lg md:text-xl font-bold bg-white p-6 border-4 border-black shadow-[6px_6px_0px_0px_#000] relative leading-relaxed max-w-2xl transform hover:scale-[1.01] transition-transform">
-            <CornerRightDown className="absolute -top-6 -left-6 w-12 h-12 stroke-[3px] text-[#ff0055] fill-[#ffff00]" />
-            Halo! Saya Rizal, Fullstack Developer berpengalaman dalam membangun aplikasi web modern, termasuk sistem cerdas yang mengintegrasikan kecerdasan buatan. Mengedepankan kode bersih, arsitektur kokoh, dan UI atraktif. Siap merealisasikan ide ekstrem Anda menjadi produk digital kelas dunia.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-4 pt-4">
-            <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.05, rotate: -2 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => playSound(500, "triangle", 0.1)}
-              className="bg-[#ff0055] text-white text-lg font-black uppercase tracking-wide border-4 border-black px-8 py-5 shadow-[6px_6px_0px_0px_#000] hover:bg-black hover:text-[#00ffcc] active:translate-x-1 active:translate-y-1 active:shadow-[2px_2px_0px_0px_#000] transition-colors flex items-center gap-3"
-            >
-              <Flame className="w-6 h-6 fill-yellow-400 stroke-black stroke-[2px]" />
-              <span>AJAK PROYEK GILA</span>
-            </motion.a>
-            
-            <motion.a
-              href={personalData.cvFile}
-              download
-              whileHover={{ scale: 1.05, rotate: 2 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => playSound(500, "triangle", 0.1)}
-              className="bg-white text-black text-lg font-black uppercase tracking-wide border-4 border-black px-8 py-5 shadow-[6px_6px_0px_0px_#000] hover:bg-yellow-300 active:translate-x-1 active:translate-y-1 active:shadow-[2px_2px_0px_0px_#000] transition-colors flex items-center gap-3"
-            >
-              <Download className="w-6 h-6 stroke-[3px]" />
-              <span>UNDUH CV SAYA</span>
-            </motion.a>
+      {/* ===== FIXED TOP BAR (marquee + navigation) ===== */}
+      <div className="flex-none relative z-40">
+        {/* Retro Marquee Banner */}
+        <div className="bg-[#ff0055] text-white py-2 border-b-4 border-black font-black uppercase text-xs md:text-sm flex overflow-x-hidden select-none">
+          <div className="flex animate-marquee whitespace-nowrap gap-12">
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <span key={idx} className="inline-flex items-center gap-4">
+                <Zap className="fill-yellow-300 stroke-black stroke-[3px] animate-bounce w-4 h-4" />
+                <span>SUPERCHARGED WEB EXPERIENCES</span>
+                <span className="w-3 h-3 bg-black border-2 border-white rounded-none transform rotate-45" />
+                <span>FULLSTACK EXPERT & AI WIZARD</span>
+                <span className="w-3 h-3 bg-black border-2 border-white rounded-none transform rotate-45" />
+                <span>NO EM-DASHES DETECTED</span>
+                <span className="w-3 h-3 bg-black border-2 border-white rounded-none transform rotate-45" />
+                <span>100% CLIENT SATISFACTION</span>
+              </span>
+            ))}
           </div>
         </div>
 
-        {/* Profile Card Container */}
-        <div className="lg:col-span-5 flex justify-center">
-          <motion.div 
-            initial={{ rotate: 10, scale: 0.8 }}
-            animate={{ rotate: 3, scale: 1 }}
-            transition={{ type: "spring", stiffness: 100 }}
-            whileHover={{ rotate: 0, scale: 1.02 }}
-            className="w-full max-w-[360px] bg-white border-4 border-black p-4 shadow-[12px_12px_0px_0px_#000] relative overflow-hidden"
+        {/* Main Header / Navigation */}
+        <header className="bg-[#00ffcc] border-b-4 border-black px-6 py-3 flex justify-between items-center shadow-[4px_4px_0px_0px_#000]">
+          <motion.div
+            onClick={triggerChaos}
+            whileHover={{ scale: 1.05, rotate: [-1, 1, -1] }}
+            className="text-lg md:text-2xl font-black tracking-tighter uppercase border-4 border-black bg-yellow-300 px-4 py-2 hover:bg-[#ff0055] hover:text-white transition-colors cursor-pointer shadow-[3px_3px_0px_0px_#000] select-none active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_#000]"
           >
-            {/* Window header */}
-            <div className="flex items-center justify-between border-b-4 border-black pb-3 mb-4 bg-[#ffff00] -mx-4 -mt-4 px-4 py-2">
-              <span className="font-black text-xs">ROOT_USER_RIZAL.EXE</span>
-              <div className="flex gap-2">
-                <span className="w-3 h-3 bg-red-500 border-2 border-black inline-block rounded-none" />
-                <span className="w-3 h-3 bg-yellow-500 border-2 border-black inline-block rounded-none" />
-                <span className="w-3 h-3 bg-green-500 border-2 border-black inline-block rounded-none" />
-              </div>
-            </div>
-
-            {/* Profile Image with dithering overlay style */}
-            <div className="w-full aspect-square border-4 border-black relative bg-[#00ffcc] overflow-hidden group">
-              <img
-                src={personalData.profileImage}
-                alt="Profile"
-                className="w-full h-full object-cover transition-transform duration-500 scale-100 group-hover:scale-110 filter grayscale contrast-150 brightness-110"
-              />
-              <div className="absolute inset-0 bg-[#ff00ff]/10 mix-blend-color pointer-events-none" />
-              
-              {/* Retro sticker badge overlay */}
-              <div className="absolute top-2 left-2 bg-yellow-300 text-black border-2 border-black font-black text-[10px] px-2 py-1 uppercase transform -rotate-12 shadow-[2px_2px_0px_0px_#000]">
-                LEVEL 99 DEV
-              </div>
-            </div>
-
-            {/* Role Card Block */}
-            <div className="mt-4 space-y-2 text-center">
-              <h3 className="text-xl font-black uppercase text-black tracking-tight">{personalData.name}</h3>
-              <div className="text-xs font-black uppercase bg-[#00ffcc] border-2 border-black px-2 py-1 text-black shadow-[2px_2px_0px_0px_#000] inline-block">
-                {personalData.role}
-              </div>
-            </div>
+            🦖 {personalData.name}
           </motion.div>
-        </div>
-      </section>
 
-      {/* Running Skills Ticker */}
-      <div className="border-t-4 border-b-4 border-black bg-black text-white overflow-hidden py-4 md:py-6 relative z-10">
-        <div className="flex w-full select-none">
-          <div className="flex animate-marquee min-w-full shrink-0 items-center justify-around">
-            {skills.map((skill, i) => (
-              <span
-                key={i}
-                className="text-lg md:text-2xl font-black uppercase tracking-widest px-8 flex items-center gap-6 text-[#00ffcc]"
+          <nav className="hidden md:flex gap-4">
+            {["WORKS", "CERTIFICATIONS", "CONTACT"].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="text-sm font-black uppercase tracking-wider px-3 py-2 bg-white border-3 border-black shadow-[3px_3px_0px_0px_#000] hover:bg-yellow-300 hover:-translate-y-0.5 transition-all"
               >
-                <Cpu className="w-6 h-6 text-yellow-300 stroke-[3px]" />
-                <span>{skill}</span>
-                <span className="w-3 h-3 bg-[#ff0055] border-2 border-white rounded-none transform rotate-45 inline-block" />
-              </span>
+                {item}
+              </a>
             ))}
-          </div>
-          <div className="flex animate-marquee min-w-full shrink-0 items-center justify-around">
-            {skills.map((skill, i) => (
-              <span
-                key={`dup-${i}`}
-                className="text-lg md:text-2xl font-black uppercase tracking-widest px-8 flex items-center gap-6 text-[#00ffcc]"
-              >
-                <Cpu className="w-6 h-6 text-yellow-300 stroke-[3px]" />
-                <span>{skill}</span>
-                <span className="w-3 h-3 bg-[#ff0055] border-2 border-white rounded-none transform rotate-45 inline-block" />
-              </span>
-            ))}
-          </div>
-        </div>
+          </nav>
+
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => {
+              playSound(700, "square", 0.2);
+              window.location.href = `mailto:${personalData.contact.email}`;
+            }}
+            className="md:hidden p-2 border-3 border-black bg-white shadow-[2px_2px_0px_0px_#000] font-bold"
+          >
+            HUKUM
+          </motion.button>
+        </header>
       </div>
 
-      {/* Main Works Section */}
-      <section id="works" className="max-w-7xl mx-auto px-6 py-20">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 border-b-4 border-black pb-8">
-          <div>
-            <div className="flex items-center gap-2 text-[#ff0055] font-black text-sm uppercase tracking-widest mb-2">
-              <Briefcase className="w-4 h-4" />
-              PORTFOLIO UTAMA
+      {/* ===== SCROLL-SNAP CONTAINER: one full screen per section ===== */}
+      <main className="flex-1 overflow-y-scroll snap-y snap-mandatory no-scrollbar relative z-10">
+
+        {/* ---------- HERO SECTION ---------- */}
+        <section className="h-full snap-start flex flex-col">
+          <div className="flex-1 min-h-0 flex items-center">
+            <div className="w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* Decorative Grid items */}
+              <div className="hidden lg:block absolute top-24 left-10 w-12 h-12 border-4 border-black bg-[#ff00ff] -z-10 transform -rotate-12 animate-pulse" />
+              <div className="hidden lg:block absolute bottom-24 right-20 w-16 h-16 border-4 border-black bg-[#00ffcc] -z-10 transform rotate-45" />
+
+              <div className="lg:col-span-7 space-y-5">
+                {/* Heading */}
+                <h1 className="text-[11vw] sm:text-[7vw] lg:text-[4.8rem] leading-[0.9] font-black uppercase tracking-tighter text-black select-none">
+                  BUAT WEB <br />
+                  <span className="bg-[#ff9900] px-4 inline-block border-4 border-black transform skew-x-3 rotate-1 hover:rotate-[-1deg] hover:bg-[#00ffcc] transition-all shadow-[6px_6px_0px_0px_#000]">
+                    GILA KENCANG
+                  </span> <br />
+                  DENGAN AI!
+                </h1>
+
+                {/* Bio Description */}
+                <p className="text-base md:text-lg font-bold bg-white p-5 border-4 border-black shadow-[6px_6px_0px_0px_#000] relative leading-relaxed max-w-2xl">
+                  <CornerRightDown className="absolute -top-6 -left-6 w-12 h-12 stroke-[3px] text-[#ff0055] fill-[#ffff00]" />
+                  Halo! Saya Rizal, Fullstack Developer berpengalaman dalam membangun aplikasi web modern, termasuk sistem cerdas yang mengintegrasikan kecerdasan buatan. Mengedepankan kode bersih, arsitektur kokoh, dan UI atraktif.
+                </p>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-wrap gap-4 pt-2">
+                  <motion.a
+                    href="#contact"
+                    whileHover={{ scale: 1.05, rotate: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => playSound(500, "triangle", 0.1)}
+                    className="bg-[#ff0055] text-white text-base md:text-lg font-black uppercase tracking-wide border-4 border-black px-6 py-4 shadow-[6px_6px_0px_0px_#000] hover:bg-black hover:text-[#00ffcc] active:translate-x-1 active:translate-y-1 active:shadow-[2px_2px_0px_0px_#000] transition-colors flex items-center gap-3"
+                  >
+                    <Flame className="w-5 h-5 fill-yellow-400 stroke-black stroke-[2px]" />
+                    <span>AJAK PROYEK GILA</span>
+                  </motion.a>
+
+                  <motion.a
+                    href={personalData.cvFile}
+                    download
+                    whileHover={{ scale: 1.05, rotate: 2 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => playSound(500, "triangle", 0.1)}
+                    className="bg-white text-black text-base md:text-lg font-black uppercase tracking-wide border-4 border-black px-6 py-4 shadow-[6px_6px_0px_0px_#000] hover:bg-yellow-300 active:translate-x-1 active:translate-y-1 active:shadow-[2px_2px_0px_0px_#000] transition-colors flex items-center gap-3"
+                  >
+                    <Download className="w-5 h-5 stroke-[3px]" />
+                    <span>UNDUH CV SAYA</span>
+                  </motion.a>
+                </div>
+              </div>
+
+              {/* Profile Card Container */}
+              <div className="hidden lg:flex lg:col-span-5 justify-center">
+                <motion.div
+                  initial={{ rotate: 10, scale: 0.8 }}
+                  animate={{ rotate: 3, scale: 1 }}
+                  transition={{ type: "spring", stiffness: 100 }}
+                  whileHover={{ rotate: 0, scale: 1.02 }}
+                  className="w-full max-w-[320px] bg-white border-4 border-black p-4 shadow-[12px_12px_0px_0px_#000] relative overflow-hidden"
+                >
+                  {/* Window header */}
+                  <div className="flex items-center justify-between border-b-4 border-black pb-3 mb-4 bg-[#ffff00] -mx-4 -mt-4 px-4 py-2">
+                    <span className="font-black text-xs">ROOT_USER_RIZAL.EXE</span>
+                    <div className="flex gap-2">
+                      <span className="w-3 h-3 bg-red-500 border-2 border-black inline-block rounded-none" />
+                      <span className="w-3 h-3 bg-yellow-500 border-2 border-black inline-block rounded-none" />
+                      <span className="w-3 h-3 bg-green-500 border-2 border-black inline-block rounded-none" />
+                    </div>
+                  </div>
+
+                  {/* Profile Image with dithering overlay style */}
+                  <div className="w-full aspect-square border-4 border-black relative bg-[#00ffcc] overflow-hidden group">
+                    <img
+                      src={personalData.profileImage}
+                      alt="Profile"
+                      className="w-full h-full object-cover transition-transform duration-500 scale-100 group-hover:scale-110 filter grayscale contrast-150 brightness-110"
+                    />
+                    <div className="absolute inset-0 bg-[#ff00ff]/5 pointer-events-none" />
+                    <div className="absolute top-2 left-2 bg-yellow-300 text-black border-2 border-black font-black text-[10px] px-2 py-1 uppercase transform -rotate-12 shadow-[2px_2px_0px_0px_#000]">
+                      LEVEL 99 DEV
+                    </div>
+                  </div>
+
+                  {/* Role Card Block */}
+                  <div className="mt-4 space-y-2 text-center">
+                    <h3 className="text-xl font-black uppercase text-black tracking-tight">{personalData.name}</h3>
+                    <div className="text-xs font-black uppercase bg-[#00ffcc] border-2 border-black px-2 py-1 text-black shadow-[2px_2px_0px_0px_#000] inline-block">
+                      {personalData.role}
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
             </div>
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tight">
-              KARYA PILIHAN
+          </div>
+
+          {/* Running Skills Ticker pinned to bottom of hero screen */}
+          <div className="flex-none border-t-4 border-b-4 border-black bg-black text-white overflow-hidden py-3 md:py-4 relative z-10">
+            <div className="flex w-full select-none">
+              <div className="flex animate-marquee min-w-full shrink-0 items-center justify-around">
+                {skills.map((skill, i) => (
+                  <span key={i} className="text-base md:text-xl font-black uppercase tracking-widest px-8 flex items-center gap-6 text-[#00ffcc]">
+                    <Cpu className="w-5 h-5 text-yellow-300 stroke-[3px]" />
+                    <span>{skill}</span>
+                    <span className="w-3 h-3 bg-[#ff0055] border-2 border-white rounded-none transform rotate-45 inline-block" />
+                  </span>
+                ))}
+              </div>
+              <div className="flex animate-marquee min-w-full shrink-0 items-center justify-around">
+                {skills.map((skill, i) => (
+                  <span key={`dup-${i}`} className="text-base md:text-xl font-black uppercase tracking-widest px-8 flex items-center gap-6 text-[#00ffcc]">
+                    <Cpu className="w-5 h-5 text-yellow-300 stroke-[3px]" />
+                    <span>{skill}</span>
+                    <span className="w-3 h-3 bg-[#ff0055] border-2 border-white rounded-none transform rotate-45 inline-block" />
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ---------- WORKS SECTION (carousel) ---------- */}
+        <section id="works" className="h-full snap-start flex flex-col overflow-hidden">
+          <div className="w-full max-w-7xl mx-auto px-6 pt-6 md:pt-8 flex-none">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b-4 border-black pb-5">
+              <div>
+                <div className="flex items-center gap-2 text-[#ff0055] font-black text-xs uppercase tracking-widest mb-1">
+                  <Briefcase className="w-4 h-4" />
+                  PORTFOLIO UTAMA
+                </div>
+                <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight">
+                  KARYA PILIHAN
+                </h2>
+              </div>
+
+              {/* Category Tabs */}
+              <div className="flex flex-wrap gap-2">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => {
+                      playSound(400, "triangle", 0.08);
+                      setActiveTab(cat);
+                    }}
+                    className={`px-3 py-2 border-3 border-black text-xs font-black uppercase transition-all shadow-[3px_3px_0px_0px_#000] active:translate-x-1 active:translate-y-1 active:shadow-[1px_1px_0px_0px_#000] ${
+                      activeTab === cat
+                        ? "bg-black text-white translate-x-[2px] translate-y-[2px] shadow-[1px_1px_0px_0px_#000]"
+                        : "bg-white hover:bg-yellow-300"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Project Carousel */}
+          <div className="flex-1 min-h-0 flex items-center w-full max-w-7xl mx-auto px-6">
+            <Carousel onNav={() => playSound(400, "sine", 0.05)}>
+              {filteredProjects.map((project) => (
+                <div
+                  key={project.id}
+                  data-card
+                  onClick={() => openModal(project)}
+                  className="snap-center shrink-0 w-[80vw] sm:w-[360px] group cursor-pointer bg-white border-4 border-black shadow-[8px_8px_0px_0px_#000] hover:shadow-[12px_12px_0px_0px_#000] hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all flex flex-col"
+                >
+                  {/* Card Top / Category */}
+                  <div className="p-4 border-b-4 border-black flex justify-between items-center bg-gray-50 group-hover:bg-yellow-300 transition-colors">
+                    <span className="font-mono text-[10px] uppercase bg-[#00ffcc] border-2 border-black px-2 py-0.5 shadow-[2px_2px_0px_0px_#000] font-black truncate max-w-[70%]">
+                      {project.category}
+                    </span>
+                    <span className="font-black text-sm">0{project.id}</span>
+                  </div>
+
+                  {/* Card Image Block */}
+                  <div className="w-full aspect-[16/9] bg-gray-100 border-b-4 border-black relative overflow-hidden">
+                    <img
+                      src={project.images[0]}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-500 scale-100 group-hover:scale-105 filter grayscale contrast-125 brightness-105"
+                    />
+                    <div className="absolute inset-0 bg-[#00ffcc]/15 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    {project.link && (
+                      <div className="absolute top-2 right-2 bg-black text-white border-2 border-white px-2 py-1 text-[10px] font-black uppercase flex items-center gap-1 shadow-lg">
+                        <ExternalLink className="w-3 h-3 text-[#00ffcc]" />
+                        LIVE LINK
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Card Info */}
+                  <div className="p-5 flex-grow flex flex-col justify-between bg-white">
+                    <div className="space-y-2">
+                      <h3 className="text-lg md:text-xl font-black uppercase leading-tight group-hover:text-[#ff0055] transition-colors line-clamp-2">
+                        {project.title}
+                      </h3>
+                      <p className="text-xs text-gray-700 font-bold line-clamp-2">
+                        {project.description}
+                      </p>
+                    </div>
+
+                    {/* Tech Badges */}
+                    <div className="mt-4 flex flex-wrap gap-1.5 pt-3 border-t-2 border-dashed border-gray-300">
+                      {project.tech.slice(0, 4).map((t, i) => (
+                        <span key={i} className="bg-[#00ffcc]/10 border border-black px-2 py-0.5 text-[10px] font-black uppercase text-black">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Action button inside card */}
+                  <div className="border-t-4 border-black p-3 bg-black text-white group-hover:bg-[#ff0055] transition-colors flex justify-between items-center text-xs font-black uppercase">
+                    <span>LIHAT DETAIL PROYEK</span>
+                    <ArrowUpRight className="w-5 h-5 group-hover:rotate-45 transition-transform" />
+                  </div>
+                </div>
+              ))}
+            </Carousel>
+          </div>
+        </section>
+
+        {/* ---------- CERTIFICATIONS SECTION (carousel) ---------- */}
+        <section id="certifications" className="h-full snap-start flex flex-col overflow-hidden bg-[#00ffcc] border-t-4 border-b-4 border-black relative">
+          <div className="absolute top-0 right-0 w-32 h-full bg-[#ff00ff]/10 -skew-x-12 -z-10" />
+
+          <div className="w-full max-w-7xl mx-auto px-6 pt-6 md:pt-8 flex-none">
+            <div className="flex items-center gap-2 text-black font-black text-xs uppercase tracking-widest mb-1">
+              <Award className="w-5 h-5 fill-yellow-300 text-black stroke-[2px]" />
+              KREDENTIAL & LISENSI
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-black border-b-4 border-black pb-5">
+              LISENSI & SERTIFIKASI
             </h2>
           </div>
-          
-          {/* Category Tabs in Neobrutalism Button Grid */}
-          <div className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => {
-                  playSound(400, "triangle", 0.08);
-                  setActiveTab(cat);
-                }}
-                className={`px-4 py-2 border-3 border-black text-xs md:text-sm font-black uppercase transition-all shadow-[3px_3px_0px_0px_#000] active:translate-x-1 active:translate-y-1 active:shadow-[1px_1px_0px_0px_#000] ${
-                  activeTab === cat 
-                    ? "bg-black text-white translate-x-[2px] translate-y-[2px] shadow-[1px_1px_0px_0px_#000]" 
-                    : "bg-white hover:bg-yellow-300"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
 
-        {/* Project Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project) => (
-              <motion.div
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                key={project.id}
-                onClick={() => openModal(project)}
-                className="group cursor-pointer bg-white border-4 border-black shadow-[8px_8px_0px_0px_#000] hover:shadow-[12px_12px_0px_0px_#000] hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all flex flex-col justify-between"
-              >
-                {/* Card Top / Category */}
-                <div className="p-5 border-b-4 border-black flex justify-between items-center bg-gray-50 group-hover:bg-yellow-300 transition-colors">
-                  <span className="font-mono text-xs uppercase bg-[#00ffcc] border-2 border-black px-2 py-0.5 shadow-[2px_2px_0px_0px_#000] font-black">
-                    {project.category}
-                  </span>
-                  <span className="font-black text-sm">0{project.id}</span>
-                </div>
+          <div className="flex-1 min-h-0 flex items-center w-full max-w-7xl mx-auto px-6">
+            <Carousel onNav={() => playSound(400, "sine", 0.05)}>
+              {certifications.map((cert) => (
+                <div
+                  key={cert.id}
+                  data-card
+                  onClick={() => openModal(cert)}
+                  className="snap-center shrink-0 w-[80vw] sm:w-[340px] group cursor-pointer border-4 border-black bg-white shadow-[8px_8px_0px_0px_#000] hover:shadow-[12px_12px_0px_0px_#000] hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all flex flex-col"
+                >
+                  {/* Header aspect */}
+                  <div className="aspect-[4/3] w-full p-5 border-b-4 border-black bg-[#ffff00] flex items-center justify-center overflow-hidden relative">
+                    <img
+                      src={cert.image}
+                      alt={cert.title}
+                      className="w-full h-full object-contain shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 border-2 border-black"
+                    />
+                    {cert.pdf && (
+                      <div className="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-black border-2 border-black px-2 py-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                        PDF DOKUMEN
+                      </div>
+                    )}
+                  </div>
 
-                {/* Card Image Block */}
-                <div className="w-full aspect-[16/10] bg-gray-100 border-b-4 border-black relative overflow-hidden group">
-                  <img
-                    src={project.images[0]}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 scale-100 group-hover:scale-105 filter grayscale contrast-125 brightness-105"
-                  />
-                  <div className="absolute inset-0 bg-[#00ffcc]/10 mix-blend-color opacity-0 group-hover:opacity-100 transition-opacity" />
-                  
-                  {/* Neobrutalism Link Indicator */}
-                  {project.link && (
-                    <div className="absolute top-2 right-2 bg-black text-white border-2 border-white px-2 py-1 text-[10px] font-black uppercase flex items-center gap-1 shadow-lg">
-                      <ExternalLink className="w-3 h-3 text-[#00ffcc]" />
-                      LIVE LINK
+                  {/* Content info */}
+                  <div className="p-5 bg-white space-y-3 flex-grow flex flex-col justify-between">
+                    <div>
+                      <h4 className="font-black uppercase text-base md:text-lg leading-tight mb-1 group-hover:underline decoration-4 underline-offset-4 decoration-[#ff0055] line-clamp-2">
+                        {cert.title}
+                      </h4>
+                      <p className="text-xs text-gray-700 font-bold line-clamp-2">
+                        {cert.description}
+                      </p>
                     </div>
-                  )}
-                </div>
 
-                {/* Card Info */}
-                <div className="p-6 flex-grow flex flex-col justify-between bg-white">
-                  <div className="space-y-3">
-                    <h3 className="text-xl md:text-2xl font-black uppercase leading-tight group-hover:text-[#ff0055] transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-gray-700 font-bold line-clamp-3">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  {/* Tech Badges */}
-                  <div className="mt-6 flex flex-wrap gap-1.5 pt-4 border-t-2 border-dashed border-gray-300">
-                    {project.tech.map((t, i) => (
-                      <span
-                        key={i}
-                        className="bg-[#00ffcc]/10 border border-black px-2 py-0.5 text-[10px] font-black uppercase text-black"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Action button inside card */}
-                <div className="border-t-4 border-black p-4 bg-black text-white group-hover:bg-[#ff0055] transition-colors flex justify-between items-center text-xs font-black uppercase">
-                  <span>LIHAT DETAIL PROYEK</span>
-                  <ArrowUpRight className="w-5 h-5 group-hover:rotate-45 transition-transform" />
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-      </section>
-
-      {/* Certifications Section */}
-      <section id="certifications" className="bg-[#00ffcc] border-t-4 border-b-4 border-black py-20 px-6 relative overflow-hidden">
-        {/* Chaos Grid layout backgrounds */}
-        <div className="absolute top-0 right-0 w-32 h-full bg-[#ff00ff]/10 -skew-x-12 -z-10" />
-        
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-2 text-black font-black text-sm uppercase tracking-widest mb-2">
-            <Award className="w-5 h-5 fill-yellow-300 text-black stroke-[2px]" />
-            KREDENTIAL & LISENSI
-          </div>
-          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tight mb-12 text-black">
-            LISENSI & SERTIFIKASI
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {certifications.map((cert) => (
-              <motion.div
-                key={cert.id}
-                onClick={() => openModal(cert)}
-                whileHover={{ scale: 1.02 }}
-                className="group cursor-pointer border-4 border-black bg-white shadow-[8px_8px_0px_0px_#000] hover:shadow-[12px_12px_0px_0px_#000] transition-all flex flex-col justify-between"
-              >
-                {/* Header aspect */}
-                <div className="aspect-[4/3] w-full p-6 border-b-4 border-black bg-[#ffff00] flex items-center justify-center overflow-hidden relative">
-                  <img
-                    src={cert.image}
-                    alt={cert.title}
-                    className="w-full h-full object-contain shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 border-2 border-black"
-                  />
-                  {cert.pdf && (
-                    <div className="absolute top-4 right-4 bg-red-600 text-white text-xs font-black border-2 border-black px-3 py-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                      PDF DOKUMEN
+                    <div className="flex justify-between items-end font-black text-[10px] uppercase bg-gray-50 border-2 border-black p-2 shadow-[2px_2px_0px_0px_#000]">
+                      <span className="text-[#ff0055]">{cert.tech[0]}</span>
+                      <span className="bg-black text-white px-2 py-0.5">{cert.tech[1]}</span>
                     </div>
-                  )}
-                </div>
-
-                {/* Content info */}
-                <div className="p-6 bg-white space-y-4 flex-grow flex flex-col justify-between">
-                  <div>
-                    <h4 className="font-black uppercase text-lg leading-tight mb-2 group-hover:underline decoration-4 underline-offset-4 decoration-[#ff0055]">
-                      {cert.title}
-                    </h4>
-                    <p className="text-xs text-gray-700 font-bold line-clamp-2">
-                      {cert.description}
-                    </p>
                   </div>
-                  
-                  <div className="flex justify-between items-end font-black text-xs uppercase bg-gray-50 border-2 border-black p-2 shadow-[2px_2px_0px_0px_#000]">
-                    <span className="text-[#ff0055]">{cert.tech[0]}</span>
-                    <span className="bg-black text-white px-2 py-0.5">{cert.tech[1]}</span>
+
+                  <div className="border-t-4 border-black p-3 bg-white group-hover:bg-yellow-300 transition-colors flex justify-between items-center text-xs font-black uppercase">
+                    <span>BUKA BUKTI FISIK</span>
+                    <CornerRightDown className="w-4 h-4 stroke-[3px]" />
                   </div>
                 </div>
-
-                <div className="border-t-4 border-black p-3 bg-white group-hover:bg-yellow-300 transition-colors flex justify-between items-center text-xs font-black uppercase">
-                  <span>BUKA BUKTI FISIK</span>
-                  <CornerRightDown className="w-4 h-4 stroke-[3px]" />
-                </div>
-              </motion.div>
-            ))}
+              ))}
+            </Carousel>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* ---------- CONTACT + FOOTER SECTION ---------- */}
+        <section id="contact" className="h-full snap-start flex flex-col overflow-hidden">
+          <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-2 border-b-4 border-black">
+            {/* Left Grid */}
+            <div className="p-8 md:p-16 bg-[#ff9900] border-b-4 lg:border-b-0 lg:border-r-4 border-black flex flex-col justify-center gap-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff00ff]/20 rounded-full blur-2xl" />
+
+              <div className="space-y-5 relative">
+                <div className="inline-flex items-center gap-2 bg-black text-white px-3 py-1.5 text-xs font-black uppercase shadow-[3px_3px_0px_0px_#000]">
+                  <Flame className="w-4 h-4 fill-yellow-400 text-black stroke-[2px]" />
+                  SEGERA JALIN KOLABORASI
+                </div>
+                <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight leading-[0.95] text-black">
+                  MARI BANGUN <br />
+                  PRODUK HEBAT <br />
+                  BERSAMA SAYA!
+                </h2>
+              </div>
+
+              <div className="flex flex-col gap-3 bg-white p-5 border-4 border-black shadow-[6px_6px_0px_0px_#000]">
+                <span className="text-xs font-black uppercase tracking-widest text-[#ff0055]">
+                  KIRIM EMAIL LANGSUNG
+                </span>
+                <a
+                  href={`mailto:${personalData.contact.email}`}
+                  className="text-base md:text-xl font-black underline decoration-4 underline-offset-4 hover:bg-black hover:text-[#00ffcc] transition-all inline-block w-max px-2 py-1 border-2 border-transparent hover:border-black break-all"
+                >
+                  {personalData.contact.email}
+                </a>
+              </div>
+            </div>
+
+            {/* Right Grid / Social links */}
+            <div className="p-8 md:p-16 flex flex-col justify-center gap-6 bg-white relative">
+              <PixelGrid />
+
+              <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight flex items-center gap-2 text-black">
+                <Zap className="fill-yellow-300 text-black stroke-[3px]" />
+                JEJARING SOSIAL RESMI
+              </h3>
+
+              <div className="space-y-4">
+                <motion.a
+                  href={personalData.contact.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  whileHover={{ x: 10, scale: 1.01 }}
+                  className="flex items-center justify-between border-4 border-black p-4 bg-[#00ffcc] shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] transition-all group font-black"
+                >
+                  <div className="flex items-center gap-3">
+                    <Github className="w-6 h-6 stroke-[3px]" />
+                    <span className="text-base md:text-xl uppercase">LINKEDIN PROFILE</span>
+                  </div>
+                  <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform" />
+                </motion.a>
+
+                <motion.a
+                  href={personalData.contact.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  whileHover={{ x: 10, scale: 1.01 }}
+                  className="flex items-center justify-between border-4 border-black p-4 bg-yellow-300 shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] transition-all group font-black"
+                >
+                  <div className="flex items-center gap-3">
+                    <Github className="w-6 h-6 stroke-[3px]" />
+                    <span className="text-base md:text-xl uppercase">GITHUB PROFILE</span>
+                  </div>
+                  <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform" />
+                </motion.a>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <footer className="flex-none py-5 bg-black text-white text-center relative overflow-hidden">
+            <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3">
+              <div className="text-xs font-black uppercase tracking-widest text-gray-400">
+                © {new Date().getFullYear()} RIZAL M. NUR. ALL RIGHTS RESERVED.
+              </div>
+              <div className="text-[10px] font-black uppercase tracking-widest bg-yellow-300 text-black px-4 py-2 border-2 border-white shadow-[2px_2px_0px_0px_#fff] transform rotate-1">
+                BUILT WITH EXTRA CHAOS AND DIGNITY
+              </div>
+            </div>
+          </footer>
+        </section>
+      </main>
 
       {/* Floating Sparkle Elements container */}
       {sparkles.map((sp) => (
@@ -537,91 +658,6 @@ export default function App() {
           }}
         />
       ))}
-
-      {/* Big Contact Banner with Neo Brutalism style */}
-      <section id="contact" className="grid grid-cols-1 lg:grid-cols-2 border-b-4 border-black">
-        {/* Left Grid */}
-        <div className="p-12 md:p-20 bg-[#ff9900] border-b-4 lg:border-b-0 lg:border-r-4 border-black flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[#ff00ff]/20 rounded-full blur-2xl" />
-          
-          <div className="space-y-6 relative">
-            <div className="inline-flex items-center gap-2 bg-black text-white px-3 py-1.5 text-xs font-black uppercase shadow-[3px_3px_0px_0px_#000]">
-              <Flame className="w-4 h-4 fill-yellow-400 text-black stroke-[2px]" />
-              SEGERA JALIN KOLABORASI
-            </div>
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tight mb-8 leading-[0.95] text-black">
-              MARI BANGUN <br />
-              PRODUK HEBAT <br />
-              BERSAMA SAYA!
-            </h2>
-          </div>
-
-          <div className="flex flex-col gap-3 mt-12 bg-white p-6 border-4 border-black shadow-[6px_6px_0px_0px_#000]">
-            <span className="text-xs font-black uppercase tracking-widest text-[#ff0055]">
-              KIRIM EMAIL LANGSUNG
-            </span>
-            <a
-              href={`mailto:${personalData.contact.email}`}
-              className="text-lg md:text-xl font-black underline decoration-4 underline-offset-4 hover:bg-black hover:text-[#00ffcc] transition-all inline-block w-max px-2 py-1 border-2 border-transparent hover:border-black"
-            >
-              {personalData.contact.email}
-            </a>
-          </div>
-        </div>
-
-        {/* Right Grid / Social links */}
-        <div className="p-12 md:p-20 flex flex-col justify-center gap-6 bg-white relative">
-          <PixelGrid />
-          
-          <h3 className="text-2xl font-black uppercase tracking-tight mb-4 flex items-center gap-2 text-black">
-            <Zap className="fill-yellow-300 text-black stroke-[3px]" />
-            JEJARING SOSIAL RESMI
-          </h3>
-
-          <div className="space-y-4">
-            <motion.a
-              href={personalData.contact.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ x: 10, scale: 1.01 }}
-              className="flex items-center justify-between border-4 border-black p-5 bg-[#00ffcc] shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] transition-all group font-black"
-            >
-              <div className="flex items-center gap-3">
-                <Github className="w-6 h-6 stroke-[3px]" />
-                <span className="text-lg md:text-xl uppercase">LINKEDIN PROFILE</span>
-              </div>
-              <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform" />
-            </motion.a>
-
-            <motion.a
-              href={personalData.contact.github}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ x: 10, scale: 1.01 }}
-              className="flex items-center justify-between border-4 border-black p-5 bg-yellow-300 shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] transition-all group font-black"
-            >
-              <div className="flex items-center gap-3">
-                <Github className="w-6 h-6 stroke-[3px]" />
-                <span className="text-lg md:text-xl uppercase">GITHUB PROFILE</span>
-              </div>
-              <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform" />
-            </motion.a>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-12 bg-black text-white border-t-4 border-black text-center relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-sm font-black uppercase tracking-widest text-gray-400">
-            © {new Date().getFullYear()} RIZAL M. NUR. ALL RIGHTS RESERVED.
-          </div>
-          
-          <div className="text-[10px] font-black uppercase tracking-widest bg-yellow-300 text-black px-4 py-2 border-2 border-white shadow-[2px_2px_0px_0px_#fff] transform rotate-1">
-            BUILT WITH EXTRA CHAOS AND DIGNITY
-          </div>
-        </div>
-      </footer>
 
       {/* Detail / Modal Box */}
       <AnimatePresence>
@@ -699,7 +735,7 @@ export default function App() {
                   <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-black">
                     {selectedItem.title}
                   </h3>
-                  
+
                   <div className="flex flex-wrap gap-1.5">
                     {selectedItem.tech.map((t, i) => (
                       <span
