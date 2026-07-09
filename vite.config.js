@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  // Use root path for custom domain (porto.bxtohur.my.id), /portofolio/ for gh-pages
+  publicDir: 'public',
   base: '/',
   
   build: {
