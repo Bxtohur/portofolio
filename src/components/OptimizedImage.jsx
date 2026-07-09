@@ -1,7 +1,7 @@
 // src/components/OptimizedImage.jsx
 // Komponen image dengan lazy loading, responsive sizing, dan format alternatives
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { useLazyLoad } from "../hooks/useLazyLoad";
 
 /**

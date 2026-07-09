@@ -27,10 +27,11 @@ export const useLazyLoad = (options = {}) => {
       ...options
     });
 
-    observer.observe(ref.current);
+    const element = ref.current;
+    observer.observe(element);
 
     return () => {
-      if (ref.current) observer.unobserve(ref.current);
+      observer.unobserve(element);
     };
   }, [options]);
 
@@ -40,22 +41,17 @@ export const useLazyLoad = (options = {}) => {
 /**
  * Hook untuk responsive image srcset
  * @param {string} basePath - Path dasar image tanpa extension
- * @returns {Object} Srcset string untuk <img>
+ * @returns {Object} Srcset configuration
  */
 export const useResponsiveImage = (basePath) => {
-  const sizes = {
-    small: "400w",
-    medium: "800w",
-    large: "1200w"
+  return {
+    srcset: [
+      `${basePath}-small.webp 400w`,
+      `${basePath}-medium.webp 800w`,
+      `${basePath}-large.webp 1200w`
+    ].join(", "),
+    sizes: "100vw"
   };
-
-  const srcset = [
-    `${basePath}-small.webp 400w`,
-    `${basePath}-medium.webp 800w`,
-    `${basePath}-large.webp 1200w`
-  ].join(", ");
-
-  return { srcset, sizes: "100vw" };
 };
 
 /**
@@ -67,7 +63,7 @@ export const getAudioContext = () => {
   if (audioContextCache === null) {
     try {
       audioContextCache = new (window.AudioContext || window.webkitAudioContext)();
-    } catch (e) {
+    } catch {
       console.warn("AudioContext not available");
     }
   }

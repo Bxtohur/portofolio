@@ -1,9 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// eslint-disable-next-line no-undef
+const isVercel = process.env.VERCEL === 'true'
+
 export default defineConfig({
   plugins: [react()],
-  base: process.env.VERCEL ? '/' : '/portofolio/',
+  base: isVercel ? '/' : '/portofolio/',
   
   build: {
     // Optimize chunk sizes

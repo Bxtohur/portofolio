@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { personalData, skills, projects, certifications } from "./data";
-import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import {
   Github,
   ExternalLink,
@@ -16,8 +16,7 @@ import {
   Zap,
   Flame
 } from "lucide-react";
-import { useLazyLoad, getAudioContext } from "./hooks/useLazyLoad";
-import OptimizedImage from "./components/OptimizedImage";
+import { getAudioContext } from "./hooks/useLazyLoad";
 
 // Sound effects or voice using text_to_speech API can be simulated.
 // Let's build a ultra-funky Neobrutalism UI.
@@ -86,10 +85,16 @@ export default function App() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("ALL");
-  const [cursorText, setCursorText] = useState("");
   const [easterEggActive, setEasterEggActive] = useState(false);
-  const [chaosPoints, setChaosPoints] = useState(0);
   const [sparkles, setSparkles] = useState([]);
+
+  useEffect(() => {
+    // Sparkle animation cleanup
+    if (sparkles.length > 0) {
+      const timer = setTimeout(() => setSparkles([]), 600);
+      return () => clearTimeout(timer);
+    }
+  }, [sparkles]);
 
   // Setup sound effect (synthesized using audio context) - cached for performance
   const playSound = useCallback((freq = 440, type = "sine", duration = 0.1) => {
@@ -107,32 +112,23 @@ export default function App() {
       gainNode.connect(audioCtx.destination);
       oscillator.start();
       oscillator.stop(audioCtx.currentTime + duration);
-    } catch (e) {
+    } catch {
       // Ignored if browser blocks audio initialization
     }
   }, []);
 
-  const spawnSparkles = useCallback((e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const newSparkles = Array.from({ length: 5 }).map((_, i) => ({
-      id: Date.now() + i,
-      x,
-      y,
-      color: ["#ff0055", "#00ffcc", "#ffff00", "#ff00ff", "#ff9900"][i % 5],
-      angle: (i * 72 * Math.PI) / 180,
-      distance: 30
-    }));
-    setSparkles((prev) => [...prev, ...newSparkles]);
-    const timer = setTimeout(() => {
-      setSparkles((prev) => prev.filter((s) => !newSparkles.find((ns) => ns.id === s.id)));
-    }, 600);
-    return () => clearTimeout(timer);
-  }, []);
+  const openModal = (item) => {
+    playSound(600, "triangle", 0.15);
+    setSelectedItem(item);
+    setCurrentImageIndex(0);
+  };
 
-  const triggerChaos = () => {
-    setChaosPoints((prev) => prev + 1);
+  const closeModal = () => {
+    playSound(300, "triangle", 0.1);
+    setSelectedItem(null);
+  };
+
+  const triggerChaos = useCallback(() => {
     setEasterEggActive(true);
     playSound(880, "sawtooth", 0.3);
     setTimeout(() => {
@@ -141,40 +137,37 @@ export default function App() {
     setTimeout(() => {
       setEasterEggActive(false);
     }, 3000);
-  };
+  }, [playSound]);
 
-  const openModal = (item) => {
-    playSound(600, "triangle", 0.15);
-    setSelectedItem(item);
-    setCurrentImageIndex(0);
-    document.body.style.overflow = "hidden";
-  };
+  // Manage body overflow when modal opens/closes
+  useEffect(() => {
+    if (selectedItem) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [selectedItem]);
 
-  const closeModal = () => {
-    playSound(300, "triangle", 0.1);
-    setSelectedItem(null);
-    document.body.style.overflow = "auto";
-  };
-
-  const nextImage = (e) => {
-    e.stopPropagation();
+  const nextImage = useCallback(() => {
     playSound(450, "sine", 0.05);
     if (selectedItem && selectedItem.images) {
       setCurrentImageIndex((prev) =>
         prev === selectedItem.images.length - 1 ? 0 : prev + 1
       );
     }
-  };
+  }, [selectedItem, playSound]);
 
-  const prevImage = (e) => {
-    e.stopPropagation();
+  const prevImage = useCallback(() => {
     playSound(450, "sine", 0.05);
     if (selectedItem && selectedItem.images) {
       setCurrentImageIndex((prev) =>
         prev === 0 ? selectedItem.images.length - 1 : prev - 1
       );
     }
-  };
+  }, [selectedItem, playSound]);
 
   // Filter projects by category
   const categories = ["ALL", "AI & R&D", "WEB APPS", "PORTALS", "GAMES"];
