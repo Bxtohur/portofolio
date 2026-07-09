@@ -17,6 +17,7 @@ import {
   Flame
 } from "lucide-react";
 import { getAudioContext } from "./hooks/useLazyLoad";
+import OptimizedImage from "./components/OptimizedImage";
 
 // Sound effects or voice using text_to_speech API can be simulated.
 // Let's build a ultra-funky Neobrutalism UI.
