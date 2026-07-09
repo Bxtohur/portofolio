@@ -42,7 +42,7 @@ export const projects = [
     description:
       "Platform resmi Sekretariat Bersama forum kerja sama 10 daerah perbatasan Jawa Barat dan Jawa Tengah (Kuningan, Cirebon, Brebes, Cilacap, Ciamis, Majalengka, Indramayu, Banjar, Pangandaran). Dilengkapi visualisasi peta wilayah interaktif, direktori potensi daerah (kuliner, pariwisata, UMKM), dan manajemen dokumen dinamis.",
     tech: ["Laravel", "Tailwind CSS", "Interactive SVG Map", "MySQL"],
-    images: ["/images/LandingPage.webp"], // Gunakan preview map bawaan repository karena live sedang memuat bermasalah CSS
+    images: ["/images/kuncibersama.webp"],
     link: "https://kuncibersama.or.id",
   },
   {
