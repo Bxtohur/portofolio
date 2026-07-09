@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { personalData, skills, projects, certifications } from "./data";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion"; // eslint-disable-line no-unused-vars
 import {
   Github,
   ExternalLink,
