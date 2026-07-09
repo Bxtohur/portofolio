@@ -1,40 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { personalData, skills, projects, certifications } from "./data";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import {
   Github,
-  Mail,
   ExternalLink,
   ArrowUpRight,
   Download,
   Cpu,
-  Code,
-  Smartphone,
-  Sparkles,
   Briefcase,
   Award,
   ChevronLeft,
   ChevronRight,
   X,
-  Send,
   CornerRightDown,
-  Volume2,
-  VolumeX,
-  Skull,
   Zap,
-  Bomb,
-  Flame,
-  Wrench,
-  Dribbble,
-  Gamepad2,
-  Tv,
-  CheckCircle,
-  FileCode,
-  Layers,
-  MapPin,
-  Heart,
-  Star
+  Flame
 } from "lucide-react";
+import { useLazyLoad, getAudioContext } from "./hooks/useLazyLoad";
+import OptimizedImage from "./components/OptimizedImage";
 
 // Sound effects or voice using text_to_speech API can be simulated.
 // Let's build a ultra-funky Neobrutalism UI.
@@ -48,36 +31,28 @@ import {
 // - Dither/bitmap effects (pixel patterns, scanlines, grainy textures).
 
 // Custom custom Cursor or Sparkles
-const PixelGrid = () => {
+// Optimized: Removed heavy scanlines, kept minimal grid
+const PixelGrid = React.memo(() => {
   return (
-    <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{
-      backgroundImage: `radial-gradient(circle, #000 1.5px, transparent 1.5px)`,
-      backgroundSize: '24px 24px'
+    <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{
+      backgroundImage: `radial-gradient(circle, #000 1px, transparent 1px)`,
+      backgroundSize: '32px 32px'
     }} />
   );
-};
-
-const Scanlines = () => {
-  return (
-    <div className="fixed inset-0 pointer-events-none z-[999] opacity-[0.05] bg-repeat" style={{
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5) 50%)`,
-      backgroundSize: '100% 4px'
-    }} />
-  );
-};
+});
 
 // Horizontal neobrutalism carousel used when cards don't fit a single screen.
-const Carousel = ({ children, onNav }) => {
+const Carousel = React.memo(({ children, onNav }) => {
   const trackRef = useRef(null);
 
-  const scrollByCard = (dir) => {
+  const scrollByCard = useCallback((dir) => {
     const el = trackRef.current;
     if (!el) return;
     const card = el.querySelector("[data-card]");
     const amount = card ? card.offsetWidth + 24 : el.clientWidth * 0.8;
     el.scrollBy({ left: dir * amount, behavior: "smooth" });
-    if (onNav) onNav();
-  };
+    onNav?.();
+  }, [onNav]);
 
   return (
     <div className="relative w-full flex items-center">
@@ -105,7 +80,7 @@ const Carousel = ({ children, onNav }) => {
       </button>
     </div>
   );
-};
+});
 
 export default function App() {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -116,10 +91,12 @@ export default function App() {
   const [chaosPoints, setChaosPoints] = useState(0);
   const [sparkles, setSparkles] = useState([]);
 
-  // Setup sound effect (synthesized using audio context)
-  const playSound = (freq = 440, type = "sine", duration = 0.1) => {
+  // Setup sound effect (synthesized using audio context) - cached for performance
+  const playSound = useCallback((freq = 440, type = "sine", duration = 0.1) => {
     try {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const audioCtx = getAudioContext();
+      if (!audioCtx) return;
+      
       const oscillator = audioCtx.createOscillator();
       const gainNode = audioCtx.createGain();
       oscillator.type = type;
@@ -133,25 +110,26 @@ export default function App() {
     } catch (e) {
       // Ignored if browser blocks audio initialization
     }
-  };
+  }, []);
 
-  const spawnSparkles = (e) => {
+  const spawnSparkles = useCallback((e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    const newSparkles = Array.from({ length: 8 }).map((_, i) => ({
+    const newSparkles = Array.from({ length: 5 }).map((_, i) => ({
       id: Date.now() + i,
       x,
       y,
-      color: ["#ff0055", "#00ffcc", "#ffff00", "#ff00ff", "#ff9900"][Math.floor(Math.random() * 5)],
-      angle: (i * 45 * Math.PI) / 180,
-      distance: Math.random() * 40 + 20
+      color: ["#ff0055", "#00ffcc", "#ffff00", "#ff00ff", "#ff9900"][i % 5],
+      angle: (i * 72 * Math.PI) / 180,
+      distance: 30
     }));
     setSparkles((prev) => [...prev, ...newSparkles]);
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setSparkles((prev) => prev.filter((s) => !newSparkles.find((ns) => ns.id === s.id)));
-    }, 800);
-  };
+    }, 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const triggerChaos = () => {
     setChaosPoints((prev) => prev + 1);
@@ -212,7 +190,6 @@ export default function App() {
   return (
     <div className={`h-screen flex flex-col bg-[#FFFbeb] text-black font-mono selection:bg-[#ff0055] selection:text-white relative overflow-hidden ${easterEggActive ? "animate-[shake_0.5s_infinite]" : ""}`}>
       <PixelGrid />
-      <Scanlines />
 
       {/* ===== FIXED TOP BAR (marquee + navigation) ===== */}
       <div className="flex-none relative z-40">
@@ -344,10 +321,11 @@ export default function App() {
 
                   {/* Profile Image with dithering overlay style */}
                   <div className="w-full aspect-square border-4 border-black relative bg-[#00ffcc] overflow-hidden group">
-                    <img
+                    <OptimizedImage
                       src={personalData.profileImage}
                       alt="Profile"
-                      className="w-full h-full object-cover transition-transform duration-500 scale-100 group-hover:scale-110 filter grayscale contrast-150 brightness-110"
+                      eager={true}
+                      className="w-full h-full"
                     />
                     <div className="absolute inset-0 bg-[#ff00ff]/5 pointer-events-none" />
                     <div className="absolute top-2 left-2 bg-yellow-300 text-black border-2 border-black font-black text-[10px] px-2 py-1 uppercase transform -rotate-12 shadow-[2px_2px_0px_0px_#000]">
@@ -448,10 +426,10 @@ export default function App() {
 
                   {/* Card Image Block */}
                   <div className="w-full aspect-[16/9] bg-gray-100 border-b-4 border-black relative overflow-hidden">
-                    <img
+                    <OptimizedImage
                       src={project.images[0]}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-500 scale-100 group-hover:scale-105 filter grayscale contrast-125 brightness-105"
+                      className="w-full h-full"
                     />
                     <div className="absolute inset-0 bg-[#00ffcc]/15 opacity-0 group-hover:opacity-100 transition-opacity" />
                     {project.link && (
@@ -519,10 +497,10 @@ export default function App() {
                 >
                   {/* Header aspect */}
                   <div className="aspect-[4/3] w-full p-5 border-b-4 border-black bg-[#ffff00] flex items-center justify-center overflow-hidden relative">
-                    <img
+                    <OptimizedImage
                       src={cert.image}
                       alt={cert.title}
-                      className="w-full h-full object-contain shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 border-2 border-black"
+                      className="w-full h-full"
                     />
                     {cert.pdf && (
                       <div className="absolute top-3 right-3 bg-red-600 text-white text-[10px] font-black border-2 border-black px-2 py-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
@@ -700,14 +678,14 @@ export default function App() {
                   ></iframe>
                 ) : (
                   <>
-                    <img
+                    <OptimizedImage
                       src={
                         selectedItem.images
                           ? selectedItem.images[currentImageIndex]
                           : selectedItem.image
                       }
                       alt="Detail Preview"
-                      className="w-full h-full object-contain p-4 md:p-6"
+                      className="w-full h-full"
                     />
                     {selectedItem.images && selectedItem.images.length > 1 && (
                       <div className="absolute inset-0 flex justify-between items-center px-4">
