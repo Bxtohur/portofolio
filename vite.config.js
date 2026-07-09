@@ -1,12 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// eslint-disable-next-line no-undef
-const isVercel = process.env.VERCEL === 'true'
-
 export default defineConfig({
   plugins: [react()],
-  base: isVercel ? '/' : '/portofolio/',
+  // Use root path for custom domain (porto.bxtohur.my.id), /portofolio/ for gh-pages
+  base: '/',
   
   build: {
     // Optimize chunk sizes
