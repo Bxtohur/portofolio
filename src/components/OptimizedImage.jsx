@@ -25,12 +25,6 @@ export const OptimizedImage = ({
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
-  // Generate WebP variant path
-  const getWebPSrc = (imageSrc) => {
-    if (!imageSrc) return "";
-    return imageSrc.replace(/\.(png|jpg|jpeg)$/i, ".webp");
-  };
-
   const handleLoad = () => {
     setLoaded(true);
     onLoad?.();
@@ -50,19 +44,16 @@ export const OptimizedImage = ({
 
       {/* Picture element untuk format alternatives */}
       {shouldLoad && (
-        <picture>
-          <source srcSet={getWebPSrc(src)} type="image/webp" sizes={sizes} />
-          <img
-            src={src}
-            alt={alt}
-            className={`w-full h-full object-cover transition-opacity duration-300 ${
-              loaded ? "opacity-100" : "opacity-0"
-            }`}
-            onLoad={handleLoad}
-            onError={() => setError(true)}
-            sizes={sizes}
-          />
-        </picture>
+        <img
+          src={src}
+          alt={alt}
+          className={`w-full h-full object-cover transition-opacity duration-300 ${
+            loaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={handleLoad}
+          onError={() => setError(true)}
+          sizes={sizes}
+        />
       )}
 
       {/* Error fallback */}
